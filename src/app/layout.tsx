@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/widgets/Header";
-import QueryProvider from "@/shared/providers/query-provider";
+import { QueryProvider } from "@/shared/providers";
 
 export const metadata: Metadata = {
   title: "posts",

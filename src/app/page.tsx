@@ -1,6 +1,6 @@
 import { postsApi } from "@/entities/post/api";
 import { getQueryClient } from "@/shared/lib/get-query-client";
-import PostsFeed from "@/widgets/posts-feed/ui/posts-feed";
+import { PostsFeed } from "@/widgets/posts-feed/ui";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export const revalidate = 30;
