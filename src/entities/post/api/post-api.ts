@@ -1,9 +1,12 @@
+"use server";
 import { ApiResponse } from "@/shared/api";
 import { Post } from "@/shared/types";
 
 export async function getPosts(): Promise<ApiResponse<Post[]>> {
   try {
-    const response = await fetch(`${process.env.API_URL}/posts`);
+    const response = await fetch(`${process.env.API_URL}/posts`, {
+      next: { revalidate: 30 },
+    });
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

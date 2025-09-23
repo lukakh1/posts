@@ -3,12 +3,15 @@ import { getQueryClient } from "@/shared/lib/get-query-client";
 import PostsFeed from "@/widgets/posts-feed/ui/posts-feed";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
+export const revalidate = 30;
+
 export default async function Home() {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["posts"],
     queryFn: postsApi.getPosts,
+    staleTime: 30 * 1000,
   });
 
   // const posts = await postsApi.getPosts();

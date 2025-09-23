@@ -1,13 +1,19 @@
 "use client";
 import { postsApi } from "@/entities/post/api";
 import { Post } from "@/shared/types";
+import { Error, Loader } from "@/shared/ui";
 import { useQuery } from "@tanstack/react-query";
 
 export default function PostsFeed({ posts }: { posts?: Post[] }) {
-  const { data } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ["posts"],
     queryFn: postsApi.getPosts,
+    refetchOnWindowFocus: false,
+    refetchInterval: 30000,
   });
+
+  if (isPending) return <Loader />;
+  if (isError) return <Error />;
   return (
     <div>
       {/* {posts?.map((post) => (
