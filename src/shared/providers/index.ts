@@ -1,3 +1,4 @@
 import QueryProvider from "./query-provider";
+import { LikeStoreProvider, useLikeStore } from "./like-store-provider";
 
-export { QueryProvider };
+export { QueryProvider, LikeStoreProvider, useLikeStore };

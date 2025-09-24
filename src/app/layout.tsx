@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/widgets/Header";
-import { QueryProvider } from "@/shared/providers";
+import { LikeStoreProvider, QueryProvider } from "@/shared/providers";
 
 export const metadata: Metadata = {
   title: "posts",
@@ -16,8 +16,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <QueryProvider>
-          <Header />
-          {children}
+          <LikeStoreProvider>
+            <Header />
+            {children}
+          </LikeStoreProvider>
         </QueryProvider>
       </body>
     </html>

@@ -16,11 +16,11 @@ export function MoreSVG() {
   );
 }
 
-export function Heart() {
+export function Heart({ isLiked = false }: { isLiked: boolean }) {
   return (
     <svg
       className="relative z-10 h-5 w-5 transform text-gray-400 transition-all duration-300 group-hover/like:text-red-400 group-hover/like:scale-110 group-active/like:text-red-500"
-      fill="none"
+      fill={isLiked ? "black" : "none"}
       viewBox="0 0 24 24"
       stroke="currentColor"
     >
