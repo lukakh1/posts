@@ -1,5 +1,6 @@
 "use client";
 import { postsApi } from "@/entities/post/api";
+import { PostCard } from "@/entities/post/ui";
 import { Post } from "@/shared/types";
 import { Error, Loader } from "@/shared/ui";
 import { useQuery } from "@tanstack/react-query";
@@ -15,18 +16,12 @@ export default function PostsFeed({ posts }: { posts?: Post[] }) {
   if (isPending) return <Loader />;
   if (isError) return <Error />;
   return (
-    <div>
+    <div className="mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {/* {posts?.map((post) => (
-        <div key={post.id} className="border p-4 mb-4 rounded shadow">
-          <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-          <p className="text-gray-700">{post.body}</p>
-        </div>
+        <PostCard key={post.id} post={post} />
       ))} */}
       {data?.data?.map((post) => (
-        <div key={post.id} className="border p-4 mb-4 rounded shadow">
-          <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-          <p className="text-gray-700">{post.body}</p>
-        </div>
+        <PostCard key={post.id} post={post} />
       ))}
     </div>
   );
