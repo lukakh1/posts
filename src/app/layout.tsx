@@ -13,8 +13,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  postmodal,
 }: Readonly<{
   children: React.ReactNode;
+  postmodal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -22,6 +24,7 @@ export default function RootLayout({
         <QueryProvider>
           <LikeStoreProvider>
             <HeroProvider>
+              {postmodal}
               <Header />
               {children}
             </HeroProvider>

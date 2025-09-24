@@ -1,2 +1,3 @@
 import { Post } from "./post";
-export type { Post };
+import { SlugProps } from "./slug-type";
+export type { Post, SlugProps };
