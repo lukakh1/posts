@@ -6,7 +6,13 @@ import { Dots } from "./dots";
 import { useLikeStore } from "@/shared/providers";
 import Link from "next/link";
 
-export default function PostCard({ post }: { post: Post }) {
+export default function PostCard({
+  post,
+  showRead = true,
+}: {
+  post: Post;
+  showRead?: boolean;
+}) {
   const isCurrentlyLiked = useLikeStore((state) =>
     state.liked.includes(post.id)
   );
@@ -48,17 +54,19 @@ export default function PostCard({ post }: { post: Post }) {
             <div className="absolute inset-0 rounded-full bg-red-500/30 scale-0 transition-transform duration-200 group-active/like:scale-150"></div>
           </button>
 
-          <div className="flex items-center space-x-4">
-            <Dots />
+          {showRead && (
+            <div className="flex items-center space-x-4">
+              <Dots />
 
-            <Link
-              href={`/posts/${post.id}`}
-              className="flex items-center space-x-1 text-xs text-gray-500 transition-colors duration-300 group-hover:text-purple-300"
-            >
-              <span>Read more</span>
-              <MoreSVG />
-            </Link>
-          </div>
+              <Link
+                href={`/posts/${post.id}`}
+                className="flex items-center space-x-1 text-xs text-gray-500 transition-colors duration-300 group-hover:text-purple-300"
+              >
+                <span>Read more</span>
+                <MoreSVG />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </CardUi>
