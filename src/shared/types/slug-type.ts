@@ -1,5 +1,3 @@
 export interface SlugProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }

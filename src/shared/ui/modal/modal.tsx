@@ -18,7 +18,12 @@ export default function PostModal({ children }: { children: ReactNode }) {
   };
 
   return (
-    <Modal defaultOpen={true} isOpen={true} onOpenChange={handleOpenChange}>
+    <Modal
+      className="max-h-screen w-full"
+      defaultOpen={true}
+      isOpen={true}
+      onOpenChange={handleOpenChange}
+    >
       <ModalContent>
         {(onClose) => (
           <>
