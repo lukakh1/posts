@@ -22,6 +22,44 @@ export async function getPosts(): Promise<ApiResponse<Post[]>> {
   }
 }
 
+export async function getPostsByPag(
+  limit: number,
+  page: number
+): Promise<ApiResponse<{ posts: Post[]; total: number }>> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL;
+    const response = await fetch(
+      `${baseUrl}/posts?_page=${page}&_limit=${limit}`,
+      {
+        next: { revalidate: 30, tags: ["posts"] },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+
+    // Get total count from headers (json-server provides this)
+    const totalCount = parseInt(
+      response.headers.get("X-Total-Count") || "0",
+      10
+    );
+
+    return {
+      success: true,
+      data: {
+        posts: data,
+        total: totalCount,
+      },
+    };
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "message" in error) {
+      return { success: false, error: (error as { message: string }).message };
+    }
+    return { success: false, error: "An unknown error occurred" };
+  }
+}
+
 export async function getPost(id: string): Promise<ApiResponse<Post>> {
   try {
     const response = await fetch(`${process.env.API_URL}/posts/${id}`);
