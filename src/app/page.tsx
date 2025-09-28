@@ -16,8 +16,8 @@ export default async function Home() {
 
   // const posts = await postsApi.getPosts();
   return (
-    <div className="max-w-7xl mx-auto w-full h-full">
-      <h1 className="text-4xl font-bold text-center mt-8">
+    <>
+      <h1 className="text-4xl font-bold text-center mt-8 text-slate-100">
         Welcome to the Posts!
       </h1>
       <p className="text-center mt-4 text-lg text-gray-600">
@@ -27,6 +27,6 @@ export default async function Home() {
         {/* <PostsFeed posts={posts.data} /> */}
         <PostsFeed />
       </HydrationBoundary>
-    </div>
+    </>
   );
 }
