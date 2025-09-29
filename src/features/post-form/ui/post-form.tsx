@@ -1,15 +1,15 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { PostSchema } from "../model";
-import { useState, useEffect } from "react";
 import { useAddPost } from "@/shared/hooks/use-posts";
-import { StatusAlert, SubmitButton } from "./form-components";
 import {
+  Input as HeroInput,
   Textarea as HeroTextarea,
   NumberInput,
-  Input as HeroInput,
 } from "@heroui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { PostSchema } from "../model";
+import { StatusAlert, SubmitButton } from "./form-components";
 
 type Inputs = {
   userId: number;
@@ -73,7 +73,10 @@ export default function PostForm() {
     <>
       <StatusAlert status={status} />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6 text-slate-900"
+      >
         <Controller
           name="userId"
           control={control}
@@ -119,6 +122,7 @@ export default function PostForm() {
               disabled={addPostMutation.isPending}
               isInvalid={!!errors.title}
               errorMessage={errors.title?.message}
+              className="bg-slate-200 rounded-2xl"
               {...field}
             />
           )}
