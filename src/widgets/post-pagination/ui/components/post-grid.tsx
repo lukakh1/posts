@@ -22,7 +22,7 @@ export const PostsGrid = ({
       }`}
     >
       <ul className="mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {posts.map((post) => (
+        {posts?.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
       </ul>

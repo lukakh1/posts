@@ -1,0 +1,1 @@
+export { InfinitePostsFeed } from "./ui";

@@ -11,6 +11,9 @@ export default function Header() {
           <Link href={"/pages-query"} className="text-xl font-bold">
             PostsPQ
           </Link>
+          <Link href={"/infinite-query"} className="text-xl font-bold">
+            PostsIQ
+          </Link>
         </div>
 
         <Link href={"/add-post"} className="text-xl font-bold">
