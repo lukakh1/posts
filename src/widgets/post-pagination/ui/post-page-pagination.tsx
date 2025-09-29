@@ -22,7 +22,7 @@ export default function PostPagePagination() {
   const { isPending, isError, data, error, isFetching, isPlaceholderData } =
     usePostsPag(limit, page);
 
-  const totalPages = data?.data ? Math.ceil(data.data.total / limit) : 0;
+  const totalPages = data?.total ? Math.ceil(data.total / limit) : 0;
   const hasNextPage = page < totalPages;
   const hasPrevPage = page > 1;
 
@@ -87,6 +87,8 @@ export default function PostPagePagination() {
   const goToFirst = () => goToPage(1);
   const goToLast = () => goToPage(totalPages);
 
+  console.log(data, "datunia data2");
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
@@ -102,10 +104,10 @@ export default function PostPagePagination() {
       {data?.data && (
         <div className="mb-6">
           <PaginationStats
-            total={data.data.total || 0}
+            total={data.total || 0}
             currentPage={page}
             totalPages={totalPages}
-            currentPageCount={data.data.posts?.length || 0}
+            currentPageCount={data.data.length || 0}
           />
         </div>
       )}
@@ -118,7 +120,7 @@ export default function PostPagePagination() {
         <ErrorMessage message={error?.message || "Unknown error occurred"} />
       ) : data?.data ? (
         <PostsGrid
-          posts={data.data.posts || []}
+          posts={data.data || []}
           isPlaceholderData={isPlaceholderData}
         />
       ) : null}
