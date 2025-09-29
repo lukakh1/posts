@@ -4,6 +4,32 @@ import { Post } from "@/shared/types";
 import { NewPost } from "@/shared/types/post";
 import { revalidateTag } from "next/cache";
 
+export async function getInfinitePosts(
+  pageParam: number = 0,
+  limit: number = 10
+): Promise<ApiResponse<Post[]>> {
+  const skip = pageParam * limit;
+  try {
+    const response = await fetch(
+      `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const result = await response.json();
+    return {
+      success: true,
+      data: result.posts,
+      total: result.total,
+    };
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "message" in error) {
+      return { success: false, error: (error as { message: string }).message };
+    }
+    return { success: false, error: "An unknown error occurred" };
+  }
+}
+
 export async function getPosts(): Promise<ApiResponse<Post[]>> {
   try {
     const response = await fetch(`${process.env.API_URL}/posts`, {
@@ -25,9 +51,9 @@ export async function getPosts(): Promise<ApiResponse<Post[]>> {
 export async function getPostsByPag(
   limit: number,
   page: number
-): Promise<ApiResponse<{ posts: Post[]; total: number }>> {
+): Promise<ApiResponse<Post[]>> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL;
+    const baseUrl = process.env.API_URL;
     const response = await fetch(
       `${baseUrl}/posts?_page=${page}&_limit=${limit}`,
       {
@@ -47,10 +73,8 @@ export async function getPostsByPag(
 
     return {
       success: true,
-      data: {
-        posts: data,
-        total: totalCount,
-      },
+      data: data,
+      total: totalCount,
     };
   } catch (error: unknown) {
     if (typeof error === "object" && error !== null && "message" in error) {

@@ -3,13 +3,42 @@
 import { postsApi } from "@/entities/post/api";
 import type { Post } from "@/shared/types";
 import type { NewPost } from "@/shared/types/post";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { ApiResponse } from "../api";
 
 export const postsKeys = {
   all: ["posts"] as const,
   pag: ["postsPag"] as const,
+  inf: ["postsInf"] as const,
 };
+
+export function useInfinitePosts(limit: number = 10) {
+  return useInfiniteQuery<ApiResponse<Post[]>>({
+    queryKey: postsKeys.inf,
+    queryFn: async ({ pageParam }) => {
+      const result = await postsApi.getInfinitePosts(
+        pageParam as number,
+        limit
+      );
+      if (!result.success) {
+        throw new Error(result.error ?? "Failed to fetch infinite posts");
+      }
+      return result;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const nextSkip = allPages.length * limit;
+      return lastPage.total && nextSkip < lastPage.total
+        ? allPages.length
+        : undefined;
+    },
+    initialPageParam: 0,
+  });
+}
 
 export function usePosts() {
   return useQuery<ApiResponse<Post[]>>({
@@ -26,18 +55,14 @@ export function usePosts() {
 }
 
 export function usePostsPag(limit: number = 10, page: number = 1) {
-  return useQuery<ApiResponse<{ posts: Post[]; total: number }>>({
+  return useQuery<ApiResponse<Post[]>>({
     queryKey: ["posts", "paginated", { limit, page }],
-    queryFn: async ({ queryKey }) => {
-      const [, , params] = queryKey as [
-        string,
-        string,
-        { limit: number; page: number }
-      ];
-      const result = await postsApi.getPostsByPag(params.limit, params.page);
+    queryFn: async () => {
+      const result = await postsApi.getPostsByPag(limit, page);
       if (!result.success) {
         throw new Error(result.error ?? "Failed to fetch posts");
       }
+      console.log(result, "result");
       return result;
     },
     staleTime: 1000 * 30,
