@@ -1,4 +1,5 @@
 "use client";
+import { mixpanel } from "@/shared/api";
 import { useAddPost } from "@/shared/hooks/use-posts";
 import {
   Input as HeroInput,
@@ -18,6 +19,11 @@ type Inputs = {
 };
 
 export default function PostForm() {
+  useEffect(() => {
+    mixpanel.track("Page Viewed", {
+      page: "add post page",
+    });
+  }, []);
   const [status, setStatus] = useState<
     | { type: "success"; message: string }
     | { type: "error"; message: string }
@@ -57,6 +63,11 @@ export default function PostForm() {
         type: "success",
         message: "Post has been created successfully.",
       });
+
+      mixpanel.track("add post", {
+        timestamp: new Date().toISOString(),
+      });
+
       reset({
         userId: 0,
         title: "",

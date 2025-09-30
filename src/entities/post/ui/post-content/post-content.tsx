@@ -1,9 +1,16 @@
 "use client";
-import { Post } from "@/shared/types";
-import { Heart } from "../post-card/svgs";
+import { mixpanel } from "@/shared/api";
 import { useLikeStore } from "@/shared/providers";
+import { Post } from "@/shared/types";
+import { useEffect } from "react";
+import { Heart } from "../post-card/svgs";
 
 export default function PostContent({ post }: { post: Post }) {
+  useEffect(() => {
+    mixpanel.track("Page Viewed", {
+      page: "single post page",
+    });
+  }, []);
   const isCurrentlyLiked = useLikeStore((state) =>
     state.liked.includes(post.id)
   );

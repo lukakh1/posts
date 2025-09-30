@@ -62,7 +62,6 @@ export function usePostsPag(limit: number = 10, page: number = 1) {
       if (!result.success) {
         throw new Error(result.error ?? "Failed to fetch posts");
       }
-      console.log(result, "result");
       return result;
     },
     staleTime: 1000 * 30,

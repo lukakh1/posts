@@ -1,8 +1,10 @@
 "use client";
 import { postsApi } from "@/entities/post/api";
+import { mixpanel } from "@/shared/api";
 import { usePostsPag } from "@/shared/hooks/use-posts";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import {
   ErrorMessage,
   LoadingIndicator,
@@ -12,6 +14,11 @@ import {
 } from "./components";
 
 export default function PostPagePagination() {
+  useEffect(() => {
+    mixpanel.track("Page Viewed", {
+      page: "pagination posts page",
+    });
+  }, []);
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
@@ -86,8 +93,6 @@ export default function PostPagePagination() {
 
   const goToFirst = () => goToPage(1);
   const goToLast = () => goToPage(totalPages);
-
-  console.log(data, "datunia data2");
 
   return (
     <div className="p-6">
