@@ -1,3 +1,4 @@
+import { mixpanel } from "@/shared/api";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { LikeState, LikeStore } from "./store-types";
@@ -16,6 +17,10 @@ export const createLikeStore = (initState: LikeState = defaultInitState) => {
       (set, get) => ({
         ...initState,
         likePost: (post_id) => {
+          mixpanel.track("Post Liked", {
+            post_id,
+            timestamp: new Date().toISOString(),
+          });
           const currentlyLiked = get().liked.includes(post_id);
           if (currentlyLiked) return;
           set((state) => ({ liked: [...state.liked, post_id] }));
@@ -23,6 +28,12 @@ export const createLikeStore = (initState: LikeState = defaultInitState) => {
         unlikePost: (post_id) => {
           const currentlyLiked = get().liked.includes(post_id);
           if (!currentlyLiked) return;
+
+          mixpanel.track("Post unLiked", {
+            post_id,
+            timestamp: new Date().toISOString(),
+          });
+
           set((state) => ({
             liked: state.liked.filter((id) => id !== post_id),
           }));

@@ -1,11 +1,17 @@
 "use client";
 
 import { PostCard } from "@/entities/post/ui";
+import { mixpanel } from "@/shared/api";
 import { useInfinitePosts } from "@/shared/hooks/use-posts";
 import { Icon } from "@iconify/react";
 import { useEffect, useRef } from "react";
 
 export default function InfinitePostsFeed() {
+  useEffect(() => {
+    mixpanel.track("Page Viewed", {
+      page: "infinite posts page",
+    });
+  }, []);
   const observerTarget = useRef(null);
 
   const {
