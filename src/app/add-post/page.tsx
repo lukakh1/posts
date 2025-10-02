@@ -1,4 +1,4 @@
-import { PostForm } from "@/features/post-form/ui";
+import { PostForm } from "@/features";
 
 export default function AddPost() {
   return (

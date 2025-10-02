@@ -1,10 +1,10 @@
 "use client";
+import { LikeButton } from "@/features";
 import { Post } from "@/shared/types";
-import CardUi from "./card-ui";
-import { Heart, MoreSVG } from "./svgs";
-import { Dots } from "./dots";
-import { useLikeStore } from "@/shared/providers";
 import Link from "next/link";
+import CardUi from "./card-ui";
+import { Dots } from "./dots";
+import { MoreSVG } from "./svgs";
 
 export default function PostCard({
   post,
@@ -13,20 +13,6 @@ export default function PostCard({
   post: Post;
   showRead?: boolean;
 }) {
-  const isCurrentlyLiked = useLikeStore((state) =>
-    state.liked.includes(post.id)
-  );
-  const likePost = useLikeStore((state) => state.likePost);
-  const unlikePost = useLikeStore((state) => state.unlikePost);
-
-  const handleLikeClick = () => {
-    if (isCurrentlyLiked) {
-      unlikePost(post.id);
-    } else {
-      likePost(post.id);
-    }
-  };
-
   return (
     <CardUi>
       <div className="relative z-10">
@@ -39,20 +25,7 @@ export default function PostCard({
         </p>
 
         <div className="mt-6 flex items-center justify-between">
-          <button
-            onClick={handleLikeClick}
-            className={`cursor-pointer group/like relative overflow-hidden rounded-full bg-gradient-to-r p-3 transition-all duration-300 hover:scale-110 hover:from-red-500/20 hover:to-pink-500/20 active:scale-95 ${
-              isCurrentlyLiked
-                ? "from-red-500 to-pink-500"
-                : "from-slate-800 to-slate-500"
-            }`}
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 blur transition-opacity duration-300 group-hover/like:opacity-30"></div>
-
-            <Heart isLiked={isCurrentlyLiked} />
-
-            <div className="absolute inset-0 rounded-full bg-red-500/30 scale-0 transition-transform duration-200 group-active/like:scale-150"></div>
-          </button>
+          <LikeButton id={post.id} type={0} />
 
           {showRead && (
             <div className="flex items-center space-x-4">
