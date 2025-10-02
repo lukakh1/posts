@@ -8,6 +8,7 @@ import {
   Divider,
   Link,
 } from "@heroui/react";
+import { MoreSVG } from "../svgs";
 
 export default function HeroPostCard({ post }: { post: Post }) {
   return (
@@ -25,8 +26,12 @@ export default function HeroPostCard({ post }: { post: Post }) {
       </CardBody>
       <Divider />
       <CardFooter>
-        <Link isExternal showAnchorIcon href={`/posts/${post.id}`}>
-          read more
+        <Link
+          href={`/posts/${post.id}`}
+          className="flex items-center space-x-1 text-xs text-gray-500 transition-colors duration-300 hover:text-purple-300"
+        >
+          <span>Read more</span>
+          <MoreSVG />
         </Link>
       </CardFooter>
     </Card>
