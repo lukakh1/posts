@@ -1,15 +1,10 @@
 "use client";
 import { postsApi } from "@/entities/post/api";
 import { usePostsPag } from "@/shared/hooks/use-posts";
+import { ErrorMessage, LoadingIndicator } from "@/shared/ui";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  ErrorMessage,
-  LoadingIndicator,
-  PaginationControls,
-  PaginationStats,
-  PostsGrid,
-} from "./components";
+import { PaginationControls, PaginationStats, PostsGrid } from "./components";
 
 export default function PostPagePagination() {
   const router = useRouter();
@@ -39,7 +34,10 @@ export default function PostPagePagination() {
             queryClient.prefetchQuery({
               queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
               queryFn: async () => {
-                const result = await postsApi.getPostsByPag(limit, pageToFetch);
+                const result = await postsApi.getPosts({
+                  limit,
+                  page: pageToFetch,
+                });
                 if (!result.success) {
                   throw new Error(result.error ?? "Failed to fetch posts");
                 }

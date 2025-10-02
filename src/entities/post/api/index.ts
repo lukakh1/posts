@@ -1,15 +1,14 @@
 import {
   addPost,
-  getInfinitePosts,
+  // getInfinitePosts,
   getPost,
   getPosts,
-  getPostsByPag,
 } from "./post-api";
 
 export const postsApi = {
   getPosts,
   addPost,
   getPost,
-  getPostsByPag,
-  getInfinitePosts,
+  // getPostsByPag,
+  // getInfinitePosts,
 };

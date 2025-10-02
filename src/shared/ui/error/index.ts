@@ -1,2 +1,2 @@
-import Error from "./error";
-export { Error };
+import { ErrorMessage } from "./error";
+export { ErrorMessage };

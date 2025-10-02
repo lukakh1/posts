@@ -1,4 +1,4 @@
-import { Loader } from "./loading";
-import { Error } from "./error";
+import { ErrorMessage } from "./error";
+import { LoadingIndicator } from "./loading";
 
-export { Loader, Error };
+export { ErrorMessage, LoadingIndicator };

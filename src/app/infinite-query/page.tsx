@@ -15,15 +15,21 @@ export default async function PostsPage() {
 
   await queryClient.prefetchInfiniteQuery<ApiResponse<Post[]>>({
     queryKey: ["postsInf"],
-    queryFn: ({ pageParam }) => postsApi.getInfinitePosts(pageParam as number),
+    queryFn: ({ pageParam }) =>
+      postsApi.getPosts({
+        pageParam: pageParam as number,
+        limit: 10,
+      }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
-      if (!lastPage.data || lastPage.data.length === 0) {
-        return undefined;
-      }
-      return allPages.length;
+    getNextPageParam: (
+      lastPage: ApiResponse<Post[]>,
+      allPages: ApiResponse<Post[]>[]
+    ) => {
+      const nextSkip = allPages.length * 10;
+      return lastPage.total && nextSkip < lastPage.total
+        ? allPages.length
+        : undefined;
     },
-    pages: 2,
   });
 
   return (
