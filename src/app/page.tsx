@@ -1,11 +1,21 @@
 import { postsApi } from "@/entities/post/api";
-import { getQueryClient } from "@/shared/lib/get-query-client";
+import { getGB } from "@/shared/lib";
+import { getQueryClient } from "@/shared/lib/react-query/get-query-client";
+import { GBProvider } from "@/shared/providers";
 import { PostsFeed } from "@/widgets/posts-feed/ui";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export const revalidate = 30;
 
 export default async function Home() {
+  const attributes = {
+    id: "3",
+  };
+
+  const gb = getGB({ attributes });
+  await gb.init();
+
+  const postDisplay = gb.getFeatureValue("post-display", true);
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
@@ -14,9 +24,9 @@ export default async function Home() {
     staleTime: 30 * 1000,
   });
 
-  // const posts = await postsApi.getPosts();
   return (
-    <>
+    <GBProvider payload={gb.getDecryptedPayload()} attributes={attributes}>
+      {/* <h2>Welcome Message: {welcomeMessage ? "ON" : "OFF"}</h2> */}
       <h1 className="text-4xl font-bold text-center mt-8 text-slate-100">
         Welcome to the Posts!
       </h1>
@@ -24,9 +34,9 @@ export default async function Home() {
         Discover amazing content and share your thoughts.
       </p>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        {/* <PostsFeed posts={posts.data} /> */}
+        {postDisplay && <div>wow gamoachine</div>}
         <PostsFeed />
       </HydrationBoundary>
-    </>
+    </GBProvider>
   );
 }

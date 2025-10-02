@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@flags-sdk/growthbook": "^0.1.0",
+    "@growthbook/growthbook": "^1.6.1",
+    "@growthbook/growthbook-react": "^1.6.1",
     "@heroui/input": "^2.4.27",
     "@heroui/modal": "^2.2.23",
     "@heroui/number-input": "^2.0.17",

@@ -1,5 +1,5 @@
 import { postsApi } from "@/entities/post/api";
-import { getQueryClient } from "@/shared/lib/get-query-client";
+import { getQueryClient } from "@/shared/lib";
 import { PostPagePagination } from "@/widgets/post-pagination";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 

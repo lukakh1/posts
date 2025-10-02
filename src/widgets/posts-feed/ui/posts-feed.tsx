@@ -4,6 +4,7 @@ import { mixpanel } from "@/shared/api";
 import { usePosts } from "@/shared/hooks/use-posts";
 import { Post } from "@/shared/types";
 import { Error, Loader } from "@/shared/ui";
+import { useFeatureValue } from "@growthbook/growthbook-react";
 import { useEffect } from "react";
 
 export default function PostsFeed({ posts }: { posts?: Post[] }) {
@@ -12,8 +13,11 @@ export default function PostsFeed({ posts }: { posts?: Post[] }) {
       page: "Home",
     });
   }, []);
+
+  const postDisplay = useFeatureValue("post-display", true);
   const { data, isPending, isError } = usePosts();
 
+  if (!postDisplay) return null;
   if (isPending) return <Loader />;
   if (isError) return <Error />;
   return (

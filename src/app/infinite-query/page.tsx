@@ -1,6 +1,6 @@
 import { postsApi } from "@/entities/post/api";
 import { ApiResponse } from "@/shared/api";
-import { getQueryClient } from "@/shared/lib/get-query-client";
+import { getQueryClient } from "@/shared/lib";
 import { Post } from "@/shared/types";
 import { InfinitePostsFeed } from "@/widgets/posts-infinite";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
