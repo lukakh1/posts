@@ -9,13 +9,15 @@ export const revalidate = 30;
 
 export default async function Home() {
   const attributes = {
-    id: "3",
+    id: "7",
   };
 
   const gb = getGB({ attributes });
   await gb.init();
 
   const postDisplay = gb.getFeatureValue("post-display", true);
+  const postCardType = gb.getFeatureValue("post-card-style", 0);
+
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
@@ -26,7 +28,6 @@ export default async function Home() {
 
   return (
     <GBProvider payload={gb.getDecryptedPayload()} attributes={attributes}>
-      {/* <h2>Welcome Message: {welcomeMessage ? "ON" : "OFF"}</h2> */}
       <h1 className="text-4xl font-bold text-center mt-8 text-slate-100">
         Welcome to the Posts!
       </h1>
@@ -34,8 +35,8 @@ export default async function Home() {
         Discover amazing content and share your thoughts.
       </p>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        {postDisplay && <div>wow gamoachine</div>}
-        <PostsFeed />
+        {postDisplay && <div>posts should be displayed</div>}
+        <PostsFeed postCardType={postCardType} />
       </HydrationBoundary>
     </GBProvider>
   );

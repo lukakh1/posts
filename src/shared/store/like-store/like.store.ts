@@ -16,22 +16,22 @@ export const createLikeStore = (initState: LikeState = defaultInitState) => {
     persist(
       (set, get) => ({
         ...initState,
-        likePost: (post_id) => {
+        likePost: (post_id, type = 0) => {
           mixpanel.track("Post Liked", {
             post_id,
-            timestamp: new Date().toISOString(),
+            card_type: type,
           });
           const currentlyLiked = get().liked.includes(post_id);
           if (currentlyLiked) return;
           set((state) => ({ liked: [...state.liked, post_id] }));
         },
-        unlikePost: (post_id) => {
+        unlikePost: (post_id, type = 0) => {
           const currentlyLiked = get().liked.includes(post_id);
           if (!currentlyLiked) return;
 
           mixpanel.track("Post unLiked", {
             post_id,
-            timestamp: new Date().toISOString(),
+            card_type: type,
           });
 
           set((state) => ({
