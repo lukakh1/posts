@@ -2,21 +2,39 @@
 import { ApiResponse } from "@/shared/api";
 import { Post } from "@/shared/types";
 import { NewPost } from "@/shared/types/post";
+import ky from "ky";
 import { revalidateTag } from "next/cache";
 
-export async function getInfinitePosts(
-  pageParam: number = 0,
-  limit: number = 10
+interface GetPostsOptions {
+  limit?: number;
+  page?: number;
+  pageParam?: number;
+}
+
+export async function getPosts(
+  options: GetPostsOptions = {}
 ): Promise<ApiResponse<Post[]>> {
-  const skip = pageParam * limit;
+  const { limit, page, pageParam } = options;
+
+  let url = `${process.env.API_URL}/posts`;
+
+  if (limit) {
+    const skip =
+      pageParam !== undefined
+        ? pageParam * limit
+        : page
+        ? (page - 1) * limit
+        : 0;
+
+    url += `?limit=${limit}&skip=${skip}`;
+  }
   try {
-    const response = await fetch(
-      `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const result = await response.json();
+    const result = await ky
+      .get(url, {
+        next: { revalidate: 30, tags: ["posts"] },
+      })
+      .json<{ posts: Post[]; total: number }>();
+
     return {
       success: true,
       data: result.posts,
@@ -30,67 +48,14 @@ export async function getInfinitePosts(
   }
 }
 
-export async function getPosts(): Promise<ApiResponse<Post[]>> {
-  try {
-    const response = await fetch(`${process.env.API_URL}/posts`, {
-      next: { revalidate: 30, tags: ["posts"] },
-    });
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    return { success: true, data: data };
-  } catch (error: unknown) {
-    if (typeof error === "object" && error !== null && "message" in error) {
-      return { success: false, error: (error as { message: string }).message };
-    }
-    return { success: false, error: "An unknown error occurred" };
-  }
-}
-
-export async function getPostsByPag(
-  limit: number,
-  page: number
-): Promise<ApiResponse<Post[]>> {
-  try {
-    const baseUrl = process.env.API_URL;
-    const response = await fetch(
-      `${baseUrl}/posts?_page=${page}&_limit=${limit}`,
-      {
-        next: { revalidate: 30, tags: ["posts"] },
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-
-    // Get total count from headers (json-server provides this)
-    const totalCount = parseInt(
-      response.headers.get("X-Total-Count") || "0",
-      10
-    );
-
-    return {
-      success: true,
-      data: data,
-      total: totalCount,
-    };
-  } catch (error: unknown) {
-    if (typeof error === "object" && error !== null && "message" in error) {
-      return { success: false, error: (error as { message: string }).message };
-    }
-    return { success: false, error: "An unknown error occurred" };
-  }
-}
-
 export async function getPost(id: string): Promise<ApiResponse<Post>> {
   try {
-    const response = await fetch(`${process.env.API_URL}/posts/${id}`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
+    const data = await ky
+      .get(`${process.env.API_URL}/posts/${id}`, {
+        next: { revalidate: 30, tags: ["posts"] },
+      })
+      .json<Post>();
+
     return { success: true, data: data };
   } catch (error: unknown) {
     if (typeof error === "object" && error !== null && "message" in error) {
@@ -102,19 +67,12 @@ export async function getPost(id: string): Promise<ApiResponse<Post>> {
 
 export async function addPost(postData: NewPost): Promise<ApiResponse<Post>> {
   try {
-    const response = await fetch(`${process.env.API_URL}/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postData),
-    });
+    const data = await ky
+      .post(`${process.env.API_URL}/posts/add`, {
+        json: postData,
+      })
+      .json<Post>();
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
     revalidateTag("posts");
     return { success: true, data: data };
   } catch (error: unknown) {

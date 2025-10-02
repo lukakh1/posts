@@ -25,7 +25,7 @@ export default async function Home(props: PageProps) {
       queryClient.prefetchQuery({
         queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
         queryFn: async () => {
-          const result = await postsApi.getPostsByPag(limit, pageToFetch);
+          const result = await postsApi.getPosts({ limit, page: pageToFetch });
           if (!result.success) {
             throw new Error(result.error ?? "Failed to fetch posts");
           }

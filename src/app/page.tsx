@@ -9,7 +9,7 @@ export const revalidate = 30;
 
 export default async function Home() {
   const attributes = {
-    id: "7",
+    id: "6",
   };
 
   const gb = getGB({ attributes });
@@ -22,7 +22,7 @@ export default async function Home() {
 
   await queryClient.prefetchQuery({
     queryKey: ["posts"],
-    queryFn: postsApi.getPosts,
+    queryFn: () => postsApi.getPosts(),
     staleTime: 30 * 1000,
   });
 
