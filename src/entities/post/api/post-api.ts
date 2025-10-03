@@ -1,6 +1,7 @@
 "use server";
 import { ApiResponse } from "@/shared/api";
 import { NewPost, Post } from "@/shared/types";
+import * as Sentry from "@sentry/nextjs";
 import ky from "ky";
 import { revalidateTag } from "next/cache";
 
@@ -41,8 +42,10 @@ export async function getPosts(
     };
   } catch (error: unknown) {
     if (typeof error === "object" && error !== null && "message" in error) {
+      Sentry.captureException(error);
       return { success: false, error: (error as { message: string }).message };
     }
+    Sentry.captureException("An unknown error occurred");
     return { success: false, error: "An unknown error occurred" };
   }
 }
@@ -58,8 +61,10 @@ export async function getPost(id: string): Promise<ApiResponse<Post>> {
     return { success: true, data: data };
   } catch (error: unknown) {
     if (typeof error === "object" && error !== null && "message" in error) {
+      Sentry.captureException(error);
       return { success: false, error: (error as { message: string }).message };
     }
+    Sentry.captureException("An unknown error occurred");
     return { success: false, error: "An unknown error occurred" };
   }
 }
@@ -76,8 +81,10 @@ export async function addPost(postData: NewPost): Promise<ApiResponse<Post>> {
     return { success: true, data: data };
   } catch (error: unknown) {
     if (typeof error === "object" && error !== null && "message" in error) {
+      Sentry.captureException(error);
       return { success: false, error: (error as { message: string }).message };
     }
+    Sentry.captureException("An unknown error occurred");
     return { success: false, error: "An unknown error occurred" };
   }
 }
