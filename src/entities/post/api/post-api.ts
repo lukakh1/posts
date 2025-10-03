@@ -1,7 +1,6 @@
 "use server";
 import { ApiResponse } from "@/shared/api";
-import { Post } from "@/shared/types";
-import { NewPost } from "@/shared/types/post";
+import { NewPost, Post } from "@/shared/types";
 import ky from "ky";
 import { revalidateTag } from "next/cache";
 

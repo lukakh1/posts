@@ -2,8 +2,8 @@
 import { LikeButton } from "@/features";
 import { Link } from "@/features/i18n";
 import { Post } from "@/shared/types";
+import { CardUi } from "@/shared/ui";
 import { useTranslations } from "next-intl";
-import CardUi from "./card-ui";
 import { Dots } from "./dots";
 import { MoreSVG } from "./svgs";
 

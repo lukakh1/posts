@@ -1,6 +1,7 @@
 "use client";
 import { mixpanel } from "@/shared/api";
 import { useAddPost } from "@/shared/hooks/use-posts";
+import { StatusAlert, SubmitButton } from "@/shared/ui";
 import {
   Input as HeroInput,
   Textarea as HeroTextarea,
@@ -10,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { PostSchema } from "../model";
-import { StatusAlert, SubmitButton } from "./form-components";
 
 type Inputs = {
   userId: number;
@@ -19,11 +19,6 @@ type Inputs = {
 };
 
 export default function PostForm() {
-  useEffect(() => {
-    mixpanel.track("Page Viewed", {
-      page: "add post page",
-    });
-  }, []);
   const [status, setStatus] = useState<
     | { type: "success"; message: string }
     | { type: "error"; message: string }
