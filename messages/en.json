@@ -8,7 +8,9 @@
     "home": "Home",
     "pq": "PostsPQ",
     "iq": "PostsIQ",
-    "add": "Add Post"
+    "blogs": "Blogs",
+    "add-post": "Add Post",
+    "add-blog": "Add Blog"
   },
   "LocaleSwitcher": {
     "label": "Change language",

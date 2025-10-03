@@ -17,12 +17,18 @@ export default function Header() {
           <Link href={"/infinite-query"} className="text-xl font-bold">
             {t("iq")}
           </Link>
+          <Link href={"/blogs"} className="text-xl font-bold">
+            {t("blogs")}
+          </Link>
         </div>
 
         <div className="flex gap-x-3 items-center">
           <LocaleSwitcher />
           <Link href={"/add-post"} className="text-xl font-bold">
-            {t("add")}
+            {t("add-post")}
+          </Link>
+          <Link href={"/add-blog"} className="text-xl font-bold">
+            {t("add-blog")}
           </Link>
         </div>
       </div>

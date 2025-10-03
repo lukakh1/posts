@@ -1,8 +1,7 @@
 "use client";
 
 import { postsApi } from "@/entities/post/api";
-import type { Post } from "@/shared/types";
-import type { NewPost } from "@/shared/types/post";
+import type { NewPost, Post } from "@/shared/types";
 import {
   useInfiniteQuery,
   useMutation,
