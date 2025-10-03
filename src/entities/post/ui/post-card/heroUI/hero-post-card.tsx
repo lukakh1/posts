@@ -1,13 +1,7 @@
 import { LikeButton } from "@/features";
+import { Link } from "@/features/i18n";
 import { Post } from "@/shared/types";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider,
-  Link,
-} from "@heroui/react";
+import { Card, CardBody, CardFooter, CardHeader, Divider } from "@heroui/react";
 import { MoreSVG } from "../svgs";
 
 export default function HeroPostCard({ post }: { post: Post }) {

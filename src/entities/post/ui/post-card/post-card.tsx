@@ -1,7 +1,8 @@
 "use client";
 import { LikeButton } from "@/features";
+import { Link } from "@/features/i18n";
 import { Post } from "@/shared/types";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import CardUi from "./card-ui";
 import { Dots } from "./dots";
 import { MoreSVG } from "./svgs";
@@ -13,6 +14,7 @@ export default function PostCard({
   post: Post;
   showRead?: boolean;
 }) {
+  const t = useTranslations("PostCard");
   return (
     <CardUi>
       <div className="relative z-10">
@@ -35,7 +37,7 @@ export default function PostCard({
                 href={`/posts/${post.id}`}
                 className="flex items-center space-x-1 text-xs text-gray-500 transition-colors duration-300 group-hover:text-purple-300"
               >
-                <span>Read more</span>
+                <span>{t("read-more")}</span>
                 <MoreSVG />
               </Link>
             </div>
