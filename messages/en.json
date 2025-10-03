@@ -1,0 +1,20 @@
+{
+  "HomePage": {
+    "title": "posts",
+    "welcome-message": "Welcome to the Posts!",
+    "description": "Discover amazing content and share your thoughts."
+  },
+  "Header": {
+    "home": "Home",
+    "pq": "PostsPQ",
+    "iq": "PostsIQ",
+    "add": "Add Post"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ru {🇷🇺 russian} en {🇺🇸 English} other {Unknown}}"
+  },
+  "PostCard": {
+    "read-more": "Read More"
+  }
+}

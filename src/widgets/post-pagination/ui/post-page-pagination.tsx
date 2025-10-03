@@ -1,9 +1,10 @@
 "use client";
 import { postsApi } from "@/entities/post/api";
+import { useRouter } from "@/features/i18n";
 import { usePostsPag } from "@/shared/hooks/use-posts";
 import { ErrorMessage, LoadingIndicator } from "@/shared/ui";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { PaginationControls, PaginationStats, PostsGrid } from "./components";
 
 export default function PostPagePagination() {

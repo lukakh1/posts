@@ -4,6 +4,7 @@ import { getQueryClient } from "@/shared/lib/react-query/get-query-client";
 import { GBProvider } from "@/shared/providers";
 import { PostsFeed } from "@/widgets/posts-feed/ui";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getTranslations } from "next-intl/server";
 
 export const revalidate = 30;
 
@@ -11,6 +12,8 @@ export default async function Home() {
   const attributes = {
     id: "6",
   };
+
+  const t = await getTranslations("HomePage");
 
   const gb = getGB({ attributes });
   await gb.init();
@@ -29,10 +32,10 @@ export default async function Home() {
   return (
     <GBProvider payload={gb.getDecryptedPayload()} attributes={attributes}>
       <h1 className="text-4xl font-bold text-center mt-8 text-slate-100">
-        Welcome to the Posts!
+        {t("welcome-message")}
       </h1>
       <p className="text-center mt-4 text-lg text-gray-600">
-        Discover amazing content and share your thoughts.
+        {t("description")}
       </p>
       <HydrationBoundary state={dehydrate(queryClient)}>
         {postDisplay && <div>posts should be displayed</div>}
