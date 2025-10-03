@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/rubylabs-95/javascript-nextjs"
+    }
+  }
+}
