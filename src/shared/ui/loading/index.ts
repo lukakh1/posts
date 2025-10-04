@@ -1,3 +1,1 @@
-import Loader from "./loading-spinner";
-
-export { Loader };
+export { LoadingIndicator } from "./loading-spinner";

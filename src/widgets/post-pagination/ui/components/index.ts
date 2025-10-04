@@ -1,6 +1,4 @@
 export { EmptyState } from "./empty-state";
-export { ErrorMessage } from "./error-message";
-export { LoadingIndicator } from "./loading-indicator";
 export { PaginationButton } from "./pagination-button";
 export { PaginationStats } from "./pagination-stats";
 

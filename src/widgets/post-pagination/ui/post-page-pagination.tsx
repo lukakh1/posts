@@ -1,15 +1,11 @@
 "use client";
 import { postsApi } from "@/entities/post/api";
+import { useRouter } from "@/features/i18n";
 import { usePostsPag } from "@/shared/hooks/use-posts";
+import { ErrorMessage, LoadingIndicator } from "@/shared/ui";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
-import {
-  ErrorMessage,
-  LoadingIndicator,
-  PaginationControls,
-  PaginationStats,
-  PostsGrid,
-} from "./components";
+import { useSearchParams } from "next/navigation";
+import { PaginationControls, PaginationStats, PostsGrid } from "./components";
 
 export default function PostPagePagination() {
   const router = useRouter();
@@ -39,7 +35,10 @@ export default function PostPagePagination() {
             queryClient.prefetchQuery({
               queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
               queryFn: async () => {
-                const result = await postsApi.getPostsByPag(limit, pageToFetch);
+                const result = await postsApi.getPosts({
+                  limit,
+                  page: pageToFetch,
+                });
                 if (!result.success) {
                   throw new Error(result.error ?? "Failed to fetch posts");
                 }
@@ -86,8 +85,6 @@ export default function PostPagePagination() {
 
   const goToFirst = () => goToPage(1);
   const goToLast = () => goToPage(totalPages);
-
-  console.log(data, "datunia data2");
 
   return (
     <div className="p-6">

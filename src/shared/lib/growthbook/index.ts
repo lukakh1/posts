@@ -1,0 +1,1 @@
+export { getGB } from "./growthbook";

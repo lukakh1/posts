@@ -1,5 +1,7 @@
 "use client";
+import { mixpanel } from "@/shared/api";
 import { useAddPost } from "@/shared/hooks/use-posts";
+import { StatusAlert, SubmitButton } from "@/shared/ui";
 import {
   Input as HeroInput,
   Textarea as HeroTextarea,
@@ -9,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { PostSchema } from "../model";
-import { StatusAlert, SubmitButton } from "./form-components";
 
 type Inputs = {
   userId: number;
@@ -57,6 +58,11 @@ export default function PostForm() {
         type: "success",
         message: "Post has been created successfully.",
       });
+
+      mixpanel.track("add post", {
+        timestamp: new Date().toISOString(),
+      });
+
       reset({
         userId: 0,
         title: "",

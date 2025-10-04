@@ -1,13 +1,13 @@
 "use client";
+import { useRouter } from "@/features/i18n";
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
 } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
 export default function PostModal({ children }: { children: ReactNode }) {

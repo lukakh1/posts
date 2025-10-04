@@ -2,6 +2,7 @@
 
 import { PostCard } from "@/entities/post/ui";
 import { useInfinitePosts } from "@/shared/hooks/use-posts";
+import { ErrorMessage, LoadingIndicator } from "@/shared/ui";
 import { Icon } from "@iconify/react";
 import { useEffect, useRef } from "react";
 
@@ -25,7 +26,7 @@ export default function InfinitePostsFeed() {
           fetchNextPage();
         }
       },
-      { threshold: 0.5, rootMargin: "100px" }
+      { threshold: 1.0, rootMargin: "600px" }
     );
 
     if (observerTarget.current) {
@@ -35,43 +36,16 @@ export default function InfinitePostsFeed() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
-        <div className="flex flex-col items-center gap-3">
-          <Icon
-            icon="svg-spinners:3-dots-scale"
-            className="text-5xl text-indigo-600"
-          />
-          <p className="text-gray-600 font-medium">Loading posts...</p>
-        </div>
-      </div>
-    );
-  }
+  if (isLoading)
+    <LoadingIndicator size="lg" text="Loading infinite posts..." />;
 
-  if (isError) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md">
-          <Icon
-            icon="material-symbols:error-outline"
-            className="text-6xl text-red-500 mx-auto mb-4"
-          />
-          <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
-            Error Loading Posts
-          </h2>
-          <p className="text-gray-600 text-center">
-            {error instanceof Error ? error.message : "An error occurred"}
-          </p>
-        </div>
-      </div>
-    );
-  }
+  if (isError)
+    <ErrorMessage message={error?.message || "Unknown error occurred"} />;
 
   const allPosts = data?.pages.flatMap((page) => page.data) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-300 to-pink-300 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-3">
@@ -92,13 +66,7 @@ export default function InfinitePostsFeed() {
 
         <div ref={observerTarget} className="flex justify-center py-8">
           {isFetchingNextPage && (
-            <div className="flex flex-col items-center gap-3">
-              <Icon
-                icon="svg-spinners:ring-resize"
-                className="text-4xl text-indigo-600"
-              />
-              <p className="text-gray-600 font-medium">Loading more posts...</p>
-            </div>
+            <LoadingIndicator size="lg" text="Loading more posts..." />
           )}
           {!hasNextPage && allPosts.length > 0 && (
             <div className="bg-white rounded-xl shadow-md px-6 py-4 flex items-center gap-3">

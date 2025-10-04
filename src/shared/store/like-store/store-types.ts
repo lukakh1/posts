@@ -3,8 +3,8 @@ export type LikeState = {
 };
 
 export type LikeActions = {
-  likePost: (post_id: number) => void;
-  unlikePost: (post_id: number) => void;
+  likePost: (post_id: number, type?: number) => void;
+  unlikePost: (post_id: number, type?: number) => void;
   isLiked: (post_id: number) => boolean;
 };
 
