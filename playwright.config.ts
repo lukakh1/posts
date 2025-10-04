@@ -25,7 +25,7 @@ export default defineConfig({
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "http://127.0.0.1:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -70,12 +70,15 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "npm run dev", // or your start command
+    command: "npm run dev", // or 'npm run build && npm run start' for production mode
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
     env: {
       NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
         process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY || "",
+      NEXT_PUBLIC_GROWTHBOOK_API_HOST:
+        process.env.NEXT_PUBLIC_GROWTHBOOK_API_HOST || "",
     },
   },
 });
