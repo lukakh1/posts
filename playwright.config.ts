@@ -70,9 +70,12 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "npm run dev", // or 'npm run start' - use whatever starts your app
-    url: "http://localhost:3000",
+    command: "npm run dev", // or your start command
+    url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes timeout for server to start
+    env: {
+      NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
+        process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY || "",
+    },
   },
 });
