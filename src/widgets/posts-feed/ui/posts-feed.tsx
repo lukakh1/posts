@@ -16,7 +16,10 @@ export default function PostsFeed({ posts, postCardType }: PostsFeedProps) {
   if (isError) return <ErrorMessage message="Error loading posts" />;
 
   return (
-    <div className="mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div
+      data-testid="post-data"
+      className="mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
       {/* {postCardType === 0
         ? data?.data?.map((post) => <PostCard key={post.id} post={post} />)
         : data?.data?.map((post) => <HeroPostCard key={post.id} post={post} />)} 
