@@ -2,9 +2,11 @@
 import { postsApi } from "@/entities/post/api";
 import { useRouter } from "@/features/i18n";
 import { usePostsPag } from "@/shared/hooks/use-posts";
+import { handleQueryError } from "@/shared/lib";
 import { ErrorMessage, LoadingIndicator } from "@/shared/ui";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { PaginationControls, PaginationStats, PostsGrid } from "./components";
 
 export default function PostPagePagination() {
@@ -17,6 +19,16 @@ export default function PostPagePagination() {
 
   const { isPending, isError, data, error, isFetching, isPlaceholderData } =
     usePostsPag(limit, page);
+
+  useEffect(() => {
+    if (isError && error) {
+      handleQueryError(error, ["posts", "paginated", "render"], {
+        page,
+        limit,
+        errorType: "render-error",
+      });
+    }
+  }, [isError, error, page, limit]);
 
   const totalPages = data?.total ? Math.ceil(data.total / limit) : 0;
   const hasNextPage = page < totalPages;
@@ -32,20 +44,28 @@ export default function PostPagePagination() {
         const pageToFetch = currentPage + i;
         if (pageToFetch <= totalPages) {
           prefetchPromises.push(
-            queryClient.prefetchQuery({
-              queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
-              queryFn: async () => {
-                const result = await postsApi.getPosts({
-                  limit,
+            queryClient
+              .prefetchQuery({
+                queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
+                queryFn: async () => {
+                  const result = await postsApi.getPosts({
+                    limit,
+                    page: pageToFetch,
+                  });
+                  if (!result.success) {
+                    throw new Error(result.error ?? "Failed to fetch posts");
+                  }
+                  return result;
+                },
+                staleTime: 1000 * 30,
+              })
+              .catch((error) => {
+                handleQueryError(error, ["posts", "prefetch"], {
                   page: pageToFetch,
+                  limit,
+                  context: "client-prefetch",
                 });
-                if (!result.success) {
-                  throw new Error(result.error ?? "Failed to fetch posts");
-                }
-                return result;
-              },
-              staleTime: 1000 * 30,
-            })
+              })
           );
         }
       }
