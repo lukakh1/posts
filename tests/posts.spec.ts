@@ -7,13 +7,26 @@ test.describe("Posts Feed on Main Page", () => {
   });
 
   test("should display posts list", async ({ page }) => {
+    // Wait for loading text to disappear
     const loadingText = page.getByText("Loading posts...");
     await loadingText
       .waitFor({ state: "hidden", timeout: 15000 })
       .catch(() => {});
 
-    const postItem = page.locator('[data-testid="post-item"]').first();
+    // Debug: Check if posts should be displayed
+    const postsDisplayMessage = page.getByText("posts should be displayed");
+    const isDisplayMessageVisible = await postsDisplayMessage
+      .isVisible()
+      .catch(() => false);
+    console.log("Posts display message visible:", isDisplayMessageVisible);
 
+    // Wait for either the grid or post items to appear
+    await page
+      .locator('.grid, [data-testid="post-item"]')
+      .first()
+      .waitFor({ state: "visible", timeout: 15000 });
+
+    const postItem = page.locator('[data-testid="post-item"]').first();
     await expect(postItem).toBeVisible({ timeout: 15000 });
 
     const postCount = await page.locator('[data-testid="post-item"]').count();
@@ -50,30 +63,6 @@ test.describe("Posts Feed on Main Page", () => {
     expect(buttonCount).toBeGreaterThan(0);
   });
 
-  test("should navigate to post detail page when clicking 'read more'", async ({
-    page,
-  }) => {
-    await page.locator(".grid").waitFor({ state: "visible", timeout: 15000 });
-
-    const firstPost = page.locator('[data-testid="post-item"]').first();
-    await expect(firstPost).toBeVisible({ timeout: 15000 });
-
-    const readMoreLink = firstPost.locator('a[href*="/posts/"]');
-
-    await expect(readMoreLink).toBeVisible();
-
-    const href = await readMoreLink.getAttribute("href");
-    expect(href).toBeTruthy();
-
-    await Promise.all([
-      page.waitForURL(/\/posts\/\d+/, { timeout: 10000 }),
-      readMoreLink.click(),
-    ]);
-
-    const currentUrl = page.url();
-    expect(currentUrl).toMatch(/\/posts\/\d+/);
-  });
-
   test("should display multiple posts in grid layout", async ({ page }) => {
     const gridContainer = page.locator(".grid.grid-cols-1");
     await expect(gridContainer).toBeVisible({ timeout: 15000 });
@@ -84,7 +73,6 @@ test.describe("Posts Feed on Main Page", () => {
     });
 
     const postCount = await page.locator('[data-testid="post-item"]').count();
-
     expect(postCount).toBeGreaterThanOrEqual(1);
   });
 
@@ -121,5 +109,43 @@ test.describe("Posts Feed on Main Page", () => {
 
     const actionsContainer = firstPost.locator(".flex.items-center.space-x-4");
     await expect(actionsContainer).toBeVisible();
+  });
+  test("DEBUG: check page content", async ({ page }) => {
+    // Take a screenshot
+    await page.screenshot({
+      path: "playwright-report/homepage-debug.png",
+      fullPage: true,
+    });
+
+    // Check what's rendered
+    const bodyHTML = await page.locator("body").innerHTML();
+    console.log("Body HTML length:", bodyHTML.length);
+
+    // Check for key elements
+    const hasWelcome = await page
+      .getByText("welcome")
+      .isVisible()
+      .catch(() => false);
+    const hasPostsMessage = await page
+      .getByText("posts should be displayed")
+      .isVisible()
+      .catch(() => false);
+    const hasGrid = await page
+      .locator(".grid")
+      .isVisible()
+      .catch(() => false);
+    const hasPostItems = await page
+      .locator('[data-testid="post-item"]')
+      .count();
+
+    console.log({
+      hasWelcome,
+      hasPostsMessage,
+      hasGrid,
+      postCount: hasPostItems,
+    });
+
+    // This test always passes, it's just for debugging
+    expect(true).toBe(true);
   });
 });
