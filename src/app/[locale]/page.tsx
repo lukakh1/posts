@@ -19,7 +19,7 @@ export default async function Home() {
   await gb.init();
 
   const postDisplay = gb.getFeatureValue("post-display", true);
-  const postCardType = gb.getFeatureValue("post-card-style", 0);
+  // const postCardType = gb.getFeatureValue("post-card-style", 0);
 
   const queryClient = getQueryClient();
 
@@ -39,7 +39,7 @@ export default async function Home() {
       </p>
       <HydrationBoundary state={dehydrate(queryClient)}>
         {postDisplay && <div>posts should be displayed</div>}
-        <PostsFeed postCardType={postCardType} />
+        <PostsFeed />
       </HydrationBoundary>
     </GBProvider>
   );

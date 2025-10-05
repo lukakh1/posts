@@ -1,15 +1,14 @@
 "use client";
 import HeroPostCard from "@/entities/post/ui/post-card/heroUI/hero-post-card";
 import { usePosts } from "@/shared/hooks/use-posts";
-import { Post } from "@/shared/types";
 import { ErrorMessage, LoadingIndicator } from "@/shared/ui";
 
-interface PostsFeedProps {
-  posts?: Post[];
-  postCardType: number;
-}
+// interface PostsFeedProps {
+//   posts?: Post[];
+//   postCardType: number;
+// }
 
-export default function PostsFeed({ posts, postCardType }: PostsFeedProps) {
+export default function PostsFeed() {
   const { data, isPending, isError } = usePosts();
 
   if (isPending) return <LoadingIndicator size="lg" text="Loading posts..." />;

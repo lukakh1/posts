@@ -4,18 +4,20 @@ import { SlugProps } from "@/shared/types";
 import PostModal from "@/shared/ui/modal/modal";
 import { notFound } from "next/navigation";
 
-// export const dynamicParams = true;
+export const dynamicParams = true;
 
-// export const dynamic = "force-static";
+export const dynamic = "force-static";
 
-// export const revalidate = 30000;
+export const revalidate = 30000;
 
 export async function generateStaticParams() {
   const posts = await postsApi.getPosts();
 
-  return posts.data?.map((post) => ({
-    id: String(post.id),
-  }));
+  return (
+    posts.data?.map((post) => ({
+      id: String(post.id),
+    })) ?? []
+  );
 }
 
 export default async function Page({ params }: SlugProps) {
