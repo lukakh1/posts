@@ -1,5 +1,5 @@
 import { postsApi } from "@/entities/post/api";
-import { getQueryClient } from "@/shared/lib";
+import { getQueryClient, handlePrefetchError } from "@/shared/lib";
 import { PostPagePagination } from "@/widgets/post-pagination";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
@@ -19,20 +19,40 @@ export default async function Home(props: PageProps) {
   const queryClient = getQueryClient();
 
   const prefetchPromises = [];
+
   for (let i = 0; i < 4; i++) {
     const pageToFetch = currentPage + i;
+
     prefetchPromises.push(
-      queryClient.prefetchQuery({
-        queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
-        queryFn: async () => {
-          const result = await postsApi.getPosts({ limit, page: pageToFetch });
-          if (!result.success) {
-            throw new Error(result.error ?? "Failed to fetch posts");
-          }
-          return result;
-        },
-        staleTime: 1000 * 30,
-      })
+      queryClient
+        .prefetchQuery({
+          queryKey: ["posts", "paginated", { limit, page: pageToFetch }],
+          queryFn: async () => {
+            try {
+              const result = await postsApi.getPosts({
+                limit,
+                page: pageToFetch,
+              });
+              if (!result.success) {
+                throw new Error(result.error ?? "Failed to fetch posts");
+              }
+              return result;
+            } catch (error) {
+              handlePrefetchError(error, ["posts", "paginated"], {
+                limit,
+                page: pageToFetch,
+                currentPage,
+                prefetchIndex: i,
+              });
+
+              throw error;
+            }
+          },
+          staleTime: 1000 * 30,
+        })
+        .catch((error) => {
+          console.error(`Failed to prefetch page ${pageToFetch}:`, error);
+        })
     );
   }
 
