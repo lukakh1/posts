@@ -1,8 +1,7 @@
 "use client";
 
 import { postsApi } from "@/entities/post/api";
-import type { Post } from "@/shared/types";
-import type { NewPost } from "@/shared/types/post";
+import type { NewPost, Post } from "@/shared/types";
 import {
   useInfiniteQuery,
   useMutation,
@@ -21,10 +20,10 @@ export function useInfinitePosts(limit: number = 10) {
   return useInfiniteQuery<ApiResponse<Post[]>>({
     queryKey: postsKeys.inf,
     queryFn: async ({ pageParam }) => {
-      const result = await postsApi.getInfinitePosts(
-        pageParam as number,
-        limit
-      );
+      const result = await postsApi.getPosts({
+        pageParam: pageParam as number,
+        limit: limit,
+      });
       if (!result.success) {
         throw new Error(result.error ?? "Failed to fetch infinite posts");
       }
@@ -58,11 +57,10 @@ export function usePostsPag(limit: number = 10, page: number = 1) {
   return useQuery<ApiResponse<Post[]>>({
     queryKey: ["posts", "paginated", { limit, page }],
     queryFn: async () => {
-      const result = await postsApi.getPostsByPag(limit, page);
+      const result = await postsApi.getPosts({ limit, page });
       if (!result.success) {
         throw new Error(result.error ?? "Failed to fetch posts");
       }
-      console.log(result, "result");
       return result;
     },
     staleTime: 1000 * 30,

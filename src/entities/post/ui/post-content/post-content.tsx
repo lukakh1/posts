@@ -1,22 +1,19 @@
 "use client";
-import { Post } from "@/shared/types";
-import { Heart } from "../post-card/svgs";
+import { LikeButton } from "@/features";
+import { mixpanel } from "@/shared/api";
 import { useLikeStore } from "@/shared/providers";
+import { Post } from "@/shared/types";
+import { useEffect } from "react";
 
 export default function PostContent({ post }: { post: Post }) {
+  useEffect(() => {
+    mixpanel.track("Page Viewed", {
+      page: "single post page",
+    });
+  }, []);
   const isCurrentlyLiked = useLikeStore((state) =>
     state.liked.includes(post.id)
   );
-  const likePost = useLikeStore((state) => state.likePost);
-  const unlikePost = useLikeStore((state) => state.unlikePost);
-
-  const handleLikeClick = () => {
-    if (isCurrentlyLiked) {
-      unlikePost(post.id);
-    } else {
-      likePost(post.id);
-    }
-  };
 
   return (
     <div className="w-full max-h-screen p-4 md:p-8">
@@ -38,23 +35,7 @@ export default function PostContent({ post }: { post: Post }) {
 
           <footer className="flex items-center justify-between border-t border-gray-700/30 pt-8">
             <div className="flex items-center space-x-4">
-              <button
-                onClick={handleLikeClick}
-                className={`cursor-pointer group/like relative overflow-hidden rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 transform ${
-                  isCurrentlyLiked
-                    ? "bg-gradient-to-r from-red-500 to-pink-500 shadow-lg shadow-red-500/25"
-                    : "bg-gradient-to-r from-slate-800 to-slate-600 hover:from-red-500/20 hover:to-pink-500/20"
-                }`}
-                aria-label={isCurrentlyLiked ? "Unlike post" : "Like post"}
-              >
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 blur-md transition-opacity duration-300 group-hover/like:opacity-40"></div>
-
-                <div className="relative z-10">
-                  <Heart isLiked={isCurrentlyLiked} />
-                </div>
-
-                <div className="absolute inset-0 rounded-full bg-red-500/30 scale-0 transition-transform duration-200 group-active/like:scale-150"></div>
-              </button>
+              <LikeButton id={post.id} type={0} />
 
               <span className="text-gray-400 text-sm font-medium">
                 {isCurrentlyLiked ? "Liked" : "Like this post"}

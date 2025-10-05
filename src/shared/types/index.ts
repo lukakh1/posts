@@ -1,3 +1,4 @@
-import { Post } from "./post";
+import { Blog, NewBlog } from "./blog";
+import { NewPost, Post } from "./post";
 import { SlugProps } from "./slug-type";
-export type { Post, SlugProps };
+export type { Blog, NewBlog, NewPost, Post, SlugProps };

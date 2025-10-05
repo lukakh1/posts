@@ -2,6 +2,7 @@
   "name": "posts",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -9,6 +10,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@flags-sdk/growthbook": "^0.1.0",
+    "@growthbook/growthbook": "^1.6.1",
+    "@growthbook/growthbook-react": "^1.6.1",
+    "@heroui/card": "^2.2.24",
     "@heroui/input": "^2.4.27",
     "@heroui/modal": "^2.2.23",
     "@heroui/number-input": "^2.0.17",
@@ -17,9 +22,14 @@
     "@heroui/theme": "^2.4.22",
     "@hookform/resolvers": "^5.2.2",
     "@iconify/react": "^6.0.2",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.58.0",
     "@tanstack/react-query": "^5.90.2",
-    "framer-motion": "^12.23.21",
+    "framer-motion": "^12.23.22",
+    "ky": "^1.11.0",
+    "mixpanel-browser": "^2.70.0",
     "next": "15.5.3",
+    "next-intl": "^4.3.9",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.63.0",
@@ -28,6 +38,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.55.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
