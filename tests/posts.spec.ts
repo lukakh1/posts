@@ -7,13 +7,11 @@ test.describe("Posts Feed on Main Page", () => {
   });
 
   test("should display posts list", async ({ page }) => {
-    // Wait for loading text to disappear
     const loadingText = page.getByText("Loading posts...");
     await loadingText
       .waitFor({ state: "hidden", timeout: 15000 })
       .catch(() => {});
 
-    // Wait for either the grid or post items to appear
     await page
       .locator('.grid, [data-testid="post-data"]')
       .first()
@@ -29,7 +27,7 @@ test.describe("Posts Feed on Main Page", () => {
   test("should render posts in responsive grid", async ({ page }) => {
     await page.locator(".grid").waitFor({ state: "visible", timeout: 15000 });
 
-    const gridContainer = page.locator(".mt-8.px-4.grid");
+    const gridContainer = page.locator(".grid");
     await expect(gridContainer).toBeVisible();
 
     const className = await gridContainer.getAttribute("class");
