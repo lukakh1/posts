@@ -21,7 +21,6 @@ export async function generateStaticParams() {
 export default async function Page({ params }: SlugProps) {
   const { id } = await params;
   const { data: post } = await postsApi.getPost(id);
-  console.log(post, "postunia");
   if (!post) {
     notFound();
   }
