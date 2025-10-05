@@ -1,6 +1,7 @@
 "use client";
 
 import { postsApi } from "@/entities/post/api";
+import { handleQueryError } from "@/shared/lib";
 import type { NewPost, Post } from "@/shared/types";
 import {
   useInfiniteQuery,
@@ -36,6 +37,19 @@ export function useInfinitePosts(limit: number = 10) {
         : undefined;
     },
     initialPageParam: 0,
+    meta: {
+      onError: (error: Error) => {
+        handleQueryError(error, "infinite posts", {
+          limit,
+          pageCount: "infinite",
+        });
+      },
+    },
+    retry: (failureCount, error) => {
+      // Don't retry on 4xx errors (client errors)
+      if (error.message.includes("4")) return false;
+      return failureCount < 2;
+    },
   });
 }
 
@@ -50,6 +64,17 @@ export function usePosts() {
       return result;
     },
     staleTime: 30_000,
+    meta: {
+      onError: (error: Error) => {
+        handleQueryError(error, "all posts", {
+          queryType: "all-posts",
+        });
+      },
+    },
+    retry: (failureCount, error) => {
+      if (error.message.includes("4")) return false;
+      return failureCount < 2;
+    },
   });
 }
 
@@ -65,6 +90,18 @@ export function usePostsPag(limit: number = 10, page: number = 1) {
     },
     staleTime: 1000 * 30,
     placeholderData: (previousData) => previousData,
+    meta: {
+      onError: (error: Error) => {
+        handleQueryError(error, ["posts", "paginated"], {
+          limit,
+          page,
+        });
+      },
+    },
+    retry: (failureCount, error) => {
+      if (error.message.includes("4")) return false;
+      return failureCount < 2;
+    },
   });
 }
 
@@ -81,5 +118,12 @@ export function useAddPost() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postsKeys.all });
     },
+    onError: (error, variables) => {
+      handleQueryError(error, ["posts", "mutation", "add"], {
+        postTitle: variables.title,
+        mutationType: "create",
+      });
+    },
+    retry: 1,
   });
 }

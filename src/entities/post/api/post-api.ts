@@ -1,5 +1,6 @@
 "use server";
 import { ApiResponse } from "@/shared/api";
+import { handleServerActionError } from "@/shared/lib";
 import { NewPost, Post } from "@/shared/types";
 import ky from "ky";
 import { revalidateTag } from "next/cache";
@@ -40,10 +41,13 @@ export async function getPosts(
       total: result.total,
     };
   } catch (error: unknown) {
-    if (typeof error === "object" && error !== null && "message" in error) {
-      return { success: false, error: (error as { message: string }).message };
-    }
-    return { success: false, error: "An unknown error occurred" };
+    const errorMessage = handleServerActionError(error, "getPosts", {
+      url,
+      limit: limit ?? null,
+      page: page ?? null,
+      pageParam: pageParam ?? null,
+    });
+    throw new Error(errorMessage);
   }
 }
 
@@ -57,10 +61,11 @@ export async function getPost(id: string): Promise<ApiResponse<Post>> {
 
     return { success: true, data: data };
   } catch (error: unknown) {
-    if (typeof error === "object" && error !== null && "message" in error) {
-      return { success: false, error: (error as { message: string }).message };
-    }
-    return { success: false, error: "An unknown error occurred" };
+    const errorMessage = handleServerActionError(error, "getPost", {
+      postId: id,
+      url: `${process.env.API_URL}/posts/${id}`,
+    });
+    throw new Error(errorMessage);
   }
 }
 
@@ -75,9 +80,12 @@ export async function addPost(postData: NewPost): Promise<ApiResponse<Post>> {
     revalidateTag("posts");
     return { success: true, data: data };
   } catch (error: unknown) {
-    if (typeof error === "object" && error !== null && "message" in error) {
-      return { success: false, error: (error as { message: string }).message };
-    }
-    return { success: false, error: "An unknown error occurred" };
+    const errorMessage = handleServerActionError(error, "addPost", {
+      postData: {
+        title: postData.title,
+      },
+      url: `${process.env.API_URL}/posts/add`,
+    });
+    throw new Error(errorMessage);
   }
 }

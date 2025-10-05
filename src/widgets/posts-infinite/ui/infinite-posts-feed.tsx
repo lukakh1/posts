@@ -36,11 +36,15 @@ export default function InfinitePostsFeed() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (isLoading)
-    <LoadingIndicator size="lg" text="Loading infinite posts..." />;
+  if (isLoading) {
+    return <LoadingIndicator size="lg" text="Loading infinite posts..." />;
+  }
 
-  if (isError)
-    <ErrorMessage message={error?.message || "Unknown error occurred"} />;
+  if (isError) {
+    return (
+      <ErrorMessage message={error?.message || "Unknown error occurred"} />
+    );
+  }
 
   const allPosts = data?.pages.flatMap((page) => page.data) || [];
 

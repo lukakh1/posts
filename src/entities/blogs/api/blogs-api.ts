@@ -1,32 +1,55 @@
 "use server";
 import { ApiResponse, createClient } from "@/shared/api";
+import { handleServerActionError } from "@/shared/lib";
 import { Blog, NewBlog } from "@/shared/types";
 import { revalidatePath } from "next/cache";
 
 export async function getBlogs(): Promise<ApiResponse<Blog[]>> {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from("blogs")
-    .select("*")
-    .order("created_at", { ascending: false });
+    const { data, error } = await supabase
+      .from("blogs")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    throw new Error(error.message);
+    if (error) {
+      throw error;
+    }
+
+    return { success: true, data: data };
+  } catch (error: unknown) {
+    const errorMessage = handleServerActionError(error, "getBlogs", {
+      table: "blogs",
+    });
+    throw new Error(errorMessage);
   }
-
-  return { success: true, data: data };
 }
 
-export async function addBlog(blog: NewBlog): Promise<ApiResponse<null>> {
-  const supabase = await createClient();
+export async function addBlog(blog: NewBlog): Promise<ApiResponse<Blog>> {
+  try {
+    const supabase = await createClient();
 
-  const { error: insertError } = await supabase.from("blogs").insert(blog);
+    const { data, error: insertError } = await supabase
+      .from("blogs")
+      .insert(blog)
+      .select()
+      .single();
 
-  if (insertError) {
-    throw new Error(insertError.message);
+    if (insertError) {
+      throw insertError;
+    }
+
+    revalidatePath("/blogs");
+
+    return { success: true, data: data };
+  } catch (error: unknown) {
+    const errorMessage = handleServerActionError(error, "addBlog", {
+      blogData: {
+        title: blog.title,
+      },
+      table: "blogs",
+    });
+    throw new Error(errorMessage);
   }
-  revalidatePath("/blogs");
-
-  return { success: true };
 }
