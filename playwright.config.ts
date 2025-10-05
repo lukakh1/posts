@@ -39,10 +39,10 @@ export default defineConfig({
     stderr: "pipe",
     env: {
       NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
-        process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY || "",
+        process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY!,
       NEXT_PUBLIC_GROWTHBOOK_API_HOST:
-        process.env.NEXT_PUBLIC_GROWTHBOOK_API_HOST || "",
-      API_URL: process.env.API_URL || "",
+        process.env.NEXT_PUBLIC_GROWTHBOOK_API_HOST!,
+      API_URL: process.env.API_URL!,
     },
   },
 });
