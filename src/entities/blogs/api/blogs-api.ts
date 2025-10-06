@@ -1,12 +1,12 @@
 "use server";
-import { ApiResponse, createClient } from "@/shared/api";
+import { ApiResponse, createFrontClient } from "@/shared/api";
 import { handleServerActionError } from "@/shared/lib";
 import { Blog, NewBlog } from "@/shared/types";
 import { revalidatePath } from "next/cache";
 
 export async function getBlogs(): Promise<ApiResponse<Blog[]>> {
   try {
-    const supabase = await createClient();
+    const supabase = await createFrontClient();
 
     const { data, error } = await supabase
       .from("blogs")
@@ -28,7 +28,7 @@ export async function getBlogs(): Promise<ApiResponse<Blog[]>> {
 
 export async function addBlog(blog: NewBlog): Promise<ApiResponse<Blog>> {
   try {
-    const supabase = await createClient();
+    const supabase = await createFrontClient();
 
     const { data, error: insertError } = await supabase
       .from("blogs")
