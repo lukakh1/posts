@@ -32,6 +32,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Start JSON Server
+        run: npx json-server db.json -p 3001 &
+
+      - name: Wait for JSON Server
+        run: npx wait-on http://localhost:3001
+
       - name: Run Playwright tests
         run: npx playwright test
 
