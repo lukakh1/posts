@@ -4,27 +4,36 @@ import { handleServerActionError } from "@/shared/lib";
 import { Blog, NewBlog } from "@/shared/types";
 import { revalidatePath } from "next/cache";
 
-export async function getBlogs(): Promise<ApiResponse<Blog[]>> {
-  try {
-    const supabase = await createFrontClient();
+import { unstable_cache } from "next/cache";
 
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*")
-      .order("created_at", { ascending: false });
+export const getBlogs = unstable_cache(
+  async (): Promise<ApiResponse<Blog[]>> => {
+    try {
+      const supabase = await createFrontClient();
 
-    if (error) {
-      throw error;
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        throw error;
+      }
+
+      return { success: true, data: data };
+    } catch (error: unknown) {
+      const errorMessage = handleServerActionError(error, "getBlogs", {
+        table: "blogs",
+      });
+      throw new Error(errorMessage);
     }
-
-    return { success: true, data: data };
-  } catch (error: unknown) {
-    const errorMessage = handleServerActionError(error, "getBlogs", {
-      table: "blogs",
-    });
-    throw new Error(errorMessage);
+  },
+  ["blogs-list"],
+  {
+    revalidate: 30,
+    tags: ["blogs"],
   }
-}
+);
 
 export async function addBlog(blog: NewBlog): Promise<ApiResponse<Blog>> {
   try {

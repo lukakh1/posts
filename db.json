@@ -1,0 +1,304 @@
+{
+  "posts": [
+    {
+      "userId": 1,
+      "id": "1",
+      "title": "Sunrise in the City",
+      "body": "Woke up early to catch the sunrise over the skyline. Coffee, quiet streets, and a new plan for the week."
+    },
+    {
+      "userId": 2,
+      "id": "2",
+      "title": "A Small Victory",
+      "body": "Completed a tricky bug today — felt great to refactor and simplify the solution."
+    },
+    {
+      "userId": 3,
+      "id": "3",
+      "title": "Weekend Escape",
+      "body": "Packed a bag and drove to the countryside. Fresh air and a slower pace was exactly what I needed."
+    },
+    {
+      "userId": 4,
+      "id": "4",
+      "title": "Learning TypeScript",
+      "body": "Spent the afternoon learning advanced TypeScript types and generics. Types make code safer and clearer."
+    },
+    {
+      "userId": 5,
+      "id": "5",
+      "title": "Recipe: Simple Pancakes",
+      "body": "Tried a new pancake recipe — fluffy and easy. Shared it with friends and got rave reviews."
+    },
+    {
+      "userId": 6,
+      "id": "6",
+      "title": "Book Recommendation",
+      "body": "Finished a novel that kept me thinking for days. Highly recommend for anyone who likes slow-burning mysteries."
+    },
+    {
+      "userId": 7,
+      "id": "7",
+      "title": "Garden Update",
+      "body": "Tomatoes are finally ripening. Gardening requires patience but rewards you with fresh flavors."
+    },
+    {
+      "userId": 8,
+      "id": "8",
+      "title": "Morning Run",
+      "body": "Logged a 5k this morning. Running clears my head and sets a positive tone for the day."
+    },
+    {
+      "userId": 9,
+      "id": "9",
+      "title": "Design Thoughts",
+      "body": "Exploring minimal UI patterns and focusing on clarity. Less distraction, more function."
+    },
+    {
+      "userId": 10,
+      "id": "10",
+      "title": "Movie Night",
+      "body": "Watched an indie film with brilliant cinematography. The story stayed with me afterwards."
+    },
+    {
+      "userId": 1,
+      "id": "11",
+      "title": "Coffee Experiment",
+      "body": "Tried a new brewing method at home — surprising depth of flavor from a small change."
+    },
+    {
+      "userId": 2,
+      "id": "12",
+      "title": "Code Review Tips",
+      "body": "Left constructive comments on a teammate's PR. Good reviews teach and improve collaboration."
+    },
+    {
+      "userId": 3,
+      "id": "13",
+      "title": "City Walks",
+      "body": "Found a quiet alley full of murals. Cities always hide little pockets of color."
+    },
+    {
+      "userId": 4,
+      "id": "14",
+      "title": "Refactoring Day",
+      "body": "Spent the day cleaning up legacy code. Small improvements add up over time."
+    },
+    {
+      "userId": 5,
+      "id": "15",
+      "title": "Homemade Bread",
+      "body": "Baked a loaf from scratch. The smell filled the house and the texture was perfect."
+    },
+    {
+      "userId": 6,
+      "id": "16",
+      "title": "Photography Tips",
+      "body": "Experimenting with composition and light. The right angle can tell a whole story."
+    },
+    {
+      "userId": 7,
+      "id": "17",
+      "title": "Cooking for Friends",
+      "body": "Hosted a small dinner and tried a new stew recipe. Laughter made it taste better."
+    },
+    {
+      "userId": 8,
+      "id": "18",
+      "title": "Night Sky",
+      "body": "Saw a clear sky full of stars — took a moment to step away from screens and look up."
+    },
+    {
+      "userId": 9,
+      "id": "19",
+      "title": "Minimal Workspace",
+      "body": "Cleared the desk and kept only essentials. Productivity follows a tidy space."
+    },
+    {
+      "userId": 10,
+      "id": "20",
+      "title": "Learning Guitar",
+      "body": "Picked up a few chords and a catchy riff. Practicing a little each day shows progress."
+    },
+    {
+      "userId": 1,
+      "id": "21",
+      "title": "Hiking Trail",
+      "body": "Explored a new trail with varied terrain. Nature resets your perspective in small ways."
+    },
+    {
+      "userId": 2,
+      "id": "22",
+      "title": "Weekend Project",
+      "body": "Built a small widget for a pet project. Finished features give a sense of accomplishment."
+    },
+    {
+      "userId": 3,
+      "id": "23",
+      "title": "Tea Varieties",
+      "body": "Tasted several teas from a local shop. Each blend had a distinct story and aroma."
+    },
+    {
+      "userId": 4,
+      "id": "24",
+      "title": "Debugging Session",
+      "body": "Traced a tricky bug to an edge case. Logs saved the day."
+    },
+    {
+      "userId": 5,
+      "id": "25",
+      "title": "City Market",
+      "body": "Bought fresh produce and chatted with vendors. Community markets are full of life."
+    },
+    {
+      "userId": 6,
+      "id": "26",
+      "title": "Sketching Practice",
+      "body": "Doodled during a break and discovered a new character idea for a comic."
+    },
+    {
+      "userId": 7,
+      "id": "27",
+      "title": "Board Game Night",
+      "body": "Hosted a board game night — friendly competition and snacks for everyone."
+    },
+    {
+      "userId": 8,
+      "id": "28",
+      "title": "Road Trip",
+      "body": "Drove along the coast with windows down and an upbeat playlist. Memories made."
+    },
+    {
+      "userId": 9,
+      "id": "29",
+      "title": "Morning Routine",
+      "body": "Adjusted my routine to include stretching and a short walk — energy improved."
+    },
+    {
+      "userId": 10,
+      "id": "30",
+      "title": "Gardening Swap",
+      "body": "Traded seedlings with a neighbor. Gardening builds small local ties."
+    },
+    {
+      "userId": 1,
+      "id": "31",
+      "title": "Sprint Planning",
+      "body": "Helped plan the next sprint and prioritized a few high-impact tasks for the team."
+    },
+    {
+      "userId": 2,
+      "id": "32",
+      "title": "Algorithm Puzzle",
+      "body": "Solved an interesting algorithm puzzle that stretched my thinking for an afternoon."
+    },
+    {
+      "userId": 3,
+      "id": "33",
+      "title": "Local Cafe Find",
+      "body": "Found a cozy cafe with great pastries and a welcoming atmosphere."
+    },
+    {
+      "userId": 4,
+      "id": "34",
+      "title": "CSS Tricks",
+      "body": "Learned a CSS trick for centering complex elements without extra markup."
+    },
+    {
+      "userId": 5,
+      "id": "35",
+      "title": "Music Discovery",
+      "body": "Stumbled on a new band and added their album to my rotation."
+    },
+    {
+      "userId": 6,
+      "id": "36",
+      "title": "Weekend Coding",
+      "body": "Worked on a small open-source contribution and received helpful feedback."
+    },
+    {
+      "userId": 7,
+      "id": "37",
+      "title": "City Gardens",
+      "body": "Visited a public garden and enjoyed the variety of plants on display."
+    },
+    {
+      "userId": 8,
+      "id": "38",
+      "title": "Podcast Episode",
+      "body": "Listened to an episode about creativity and felt inspired to start a side project."
+    },
+    {
+      "userId": 9,
+      "id": "39",
+      "title": "Tea Time",
+      "body": "Shared tea and conversation with a friend — small rituals matter."
+    },
+    {
+      "userId": 10,
+      "id": "40",
+      "title": "Photography Walk",
+      "body": "Took photos of architectural details and practiced framing and lines."
+    },
+    {
+      "userId": 1,
+      "id": "41",
+      "title": "Open Source",
+      "body": "Started contributing to a library and learned about maintainers' workflows."
+    },
+    {
+      "userId": 2,
+      "id": "42",
+      "title": "Healthy Lunch",
+      "body": "Prepared a balanced lunch to fuel an afternoon of focused work."
+    },
+    {
+      "userId": 3,
+      "id": "43",
+      "title": "City Library",
+      "body": "Spent a quiet hour reading at the library — a peaceful way to recharge."
+    },
+    {
+      "userId": 4,
+      "id": "44",
+      "title": "Refactor Success",
+      "body": "Refactored a complex function into smaller parts; tests all green."
+    },
+    {
+      "userId": 5,
+      "id": "45",
+      "title": "Cycling Route",
+      "body": "Took a new cycling route and enjoyed unexpected views along the way."
+    },
+    {
+      "userId": 6,
+      "id": "46",
+      "title": "Sketchbook",
+      "body": "Filled a page with quick sketches and ideas for a future project."
+    },
+    {
+      "userId": 7,
+      "id": "47",
+      "title": "Dinner Recipe",
+      "body": "Tried a vegetarian recipe that turned out flavorful and satisfying."
+    },
+    {
+      "userId": 8,
+      "id": "48",
+      "title": "Late Night Coding",
+      "body": "An evening bug fix turned into a productive streak of improvements."
+    },
+    {
+      "userId": 9,
+      "id": "49",
+      "title": "Market Finds",
+      "body": "Picked up unique spices and had fun experimenting in the kitchen."
+    },
+    {
+      "id": "9185",
+      "userId": 10,
+      "title": "kiki",
+      "body": "jona"
+    }
+  ]
+}
