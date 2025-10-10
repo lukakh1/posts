@@ -1,9 +1,6 @@
 // UI Components
 export * from "./ui";
 
-// Utilities and Libraries
-export * from "./lib";
-
 // Store
 export * from "./store";
 

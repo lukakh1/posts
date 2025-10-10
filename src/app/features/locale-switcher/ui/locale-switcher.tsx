@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "@/pkg/libraries/locale";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 
 export default function LocaleSwitcher() {
@@ -9,6 +9,8 @@ export default function LocaleSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
+
+  const locale = useLocale();
 
   const handleLocaleChange = (locale: string) => {
     startTransition(() => {
@@ -20,7 +22,7 @@ export default function LocaleSwitcher() {
     <div className="flex items-center gap-2">
       <label className="text-sm font-medium">{t("label")}:</label>
       <select
-        value={pathname.split("/")[1] || "en"}
+        value={locale}
         onChange={(e) => handleLocaleChange(e.target.value)}
         disabled={isPending}
         className="px-2 py-1 border border-gray-300 rounded bg-white text-gray-900 text-sm"
@@ -31,4 +33,3 @@ export default function LocaleSwitcher() {
     </div>
   );
 }
-
