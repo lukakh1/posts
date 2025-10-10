@@ -1,1 +1,0 @@
-export { getGB } from "./growthbook";
