@@ -1,0 +1,2 @@
+export { PostsFeed } from "./ui";
+
