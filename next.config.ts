@@ -1,13 +1,97 @@
+import { envServer } from "@/config/env";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  // your config here
+  output: "standalone",
+
+  poweredByHeader: false,
+  cacheMaxMemorySize: 100 * 1024 * 1024,
+
+  logging: {
+    fetches: {
+      fullUrl: envServer.NODE_ENV !== "production",
+    },
+  },
+
+  serverExternalPackages: ["pino", "pino-pretty"],
+
+  experimental: {
+    reactCompiler: true,
+    optimizeServerReact: true,
+    optimizePackageImports: [
+      "zod",
+      "react-hook-form",
+      "usehooks-ts",
+      "@heroui/react",
+      "@heroui/accordion",
+      "@heroui/autocomplete",
+      "@heroui/avatar",
+      "@heroui/badge",
+      "@heroui/button",
+      "@heroui/card",
+      "@heroui/chip",
+      "@heroui/divider",
+      "@heroui/dropdown",
+      "@heroui/input",
+      "@heroui/link",
+      "@heroui/modal",
+      "@heroui/navbar",
+      "@heroui/radio",
+      "@heroui/scroll-shadow",
+      "@heroui/select",
+      "@heroui/skeleton",
+      "@heroui/spinner",
+      "@heroui/system",
+      "@heroui/table",
+      "@heroui/tabs",
+      "@heroui/theme",
+      "@heroui/tooltip",
+      "zustand",
+      "framer-motion",
+    ],
+    staticGenerationRetryCount: 1,
+    staticGenerationMaxConcurrency: 2,
+    staticGenerationMinPagesPerWorker: 25,
+  },
+
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      use: ["@svgr/webpack"],
+    });
+
+    return config;
+  },
+
+  redirects: async () => {
+    return [
+      {
+        source: `/:locale/admin/:path*`,
+        destination: "/admin/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 // First apply next-intl plugin
-const withNextIntl = createNextIntlPlugin("./src/features/i18n/request.ts");
+const withNextIntl = createNextIntlPlugin({
+  requestConfig: "./src/pkg/libraries/locale/request.ts",
+  experimental: {
+    createMessagesDeclaration: "./translations/en.json",
+  },
+});
 const configWithIntl = withNextIntl(nextConfig);
 
 // Then apply Sentry plugin
