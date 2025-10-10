@@ -34,13 +34,22 @@ export default defineConfig({
     stdout: "pipe",
     stderr: "pipe",
     env: {
-      NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
-        process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY!,
-      NEXT_PUBLIC_GROWTHBOOK_API_HOST:
-        process.env.NEXT_PUBLIC_GROWTHBOOK_API_HOST!,
-      API_URL: process.env.API_URL!,
+      CI: process.env.CI!,
+      NODE_ENV: process.env.NODE_ENV!,
+      NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL!,
+      NEXT_PUBLIC_MIXPANEL_TOKEN: process.env.NEXT_PUBLIC_MIXPANEL_TOKEN!,
       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL!,
       NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      NEXT_PUBLIC_GROWTHBOOK_API_HOST:
+        process.env.NEXT_PUBLIC_GROWTHBOOK_API_HOST!,
+      NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
+        process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY!,
+      NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN!,
+      NEXT_PUBLIC_SENTRY_ENVIRONMENT:
+        process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT!,
+      SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN!,
+      SENTRY_ORG: process.env.SENTRY_ORG!,
+      SENTRY_PROJECT: process.env.SENTRY_PROJECT!,
     },
   },
 });
