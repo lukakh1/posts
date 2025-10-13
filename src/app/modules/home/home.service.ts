@@ -1,5 +1,5 @@
 import { getPosts } from "@/app/entities";
-import { getGB } from "@/pkg/libraries/growthbook/growthbook";
+import { gb } from "@/app/shared/services/growthbook.service";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 
 export type HomeFlags = {
@@ -7,16 +7,7 @@ export type HomeFlags = {
   postCardType: number;
 };
 
-export async function initHomeGrowthbook(attributes: {
-  [key: string]: string;
-}) {
-  const gb = getGB({ attributes });
-  await gb.init();
-  return gb;
-}
-
-export function readHomeFlags(gb: ReturnType<typeof getGB>): HomeFlags {
-  // gb here is a GrowthBook instance; callers must pass the initialized instance
+export function readHomeFlags(): HomeFlags {
   return {
     postDisplay: gb.getFeatureValue("post-display", true),
     postCardType: gb.getFeatureValue("post-card-style", 0),
