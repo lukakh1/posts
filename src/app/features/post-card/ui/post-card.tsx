@@ -1,5 +1,5 @@
 "use client";
-import { Post } from "@/app/entities/models";
+import { Post } from "@/app/entities";
 import { LikeButton } from "@/app/features";
 import { CardUi } from "@/app/shared/ui";
 import { Link } from "@/pkg/libraries/locale";

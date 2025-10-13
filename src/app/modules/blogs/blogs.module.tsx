@@ -1,4 +1,4 @@
-import { Blog } from "@/app/entities/models";
+import { Blog } from "@/app/entities";
 import { BlogCard } from "@/app/features/blog-card";
 
 export default function BlogsModule({ blogs }: { blogs: Blog[] }) {

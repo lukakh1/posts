@@ -1,4 +1,4 @@
-import { getPosts } from "@/app/entities/api/posts";
+import { getPosts } from "@/app/entities";
 import { getGB } from "@/pkg/libraries/growthbook/growthbook";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 

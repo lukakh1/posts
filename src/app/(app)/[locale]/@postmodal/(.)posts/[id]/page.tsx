@@ -1,10 +1,11 @@
-import { Post, SlugProps } from "@/app/entities/models";
+import { Post } from "@/app/entities";
 import {
   PostsModule,
   getPostsForStaticParams,
   getPrefetchedPostFromCache,
   prefetchSinglePost,
 } from "@/app/modules";
+import { SlugProps } from "@/app/shared";
 import PostModal from "@/app/shared/ui/modal/modal";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { notFound } from "next/navigation";

@@ -1,10 +1,10 @@
 "use server";
-import { NewPost, Post } from "@/app/entities/models";
 import { ApiResponse } from "@/app/shared/types";
 import { envClient } from "@/config/env";
 import { handleServerActionError } from "@/pkg/libraries/error-handler";
 import ky from "ky";
 import { revalidateTag } from "next/cache";
+import { NewPost, Post } from "../model";
 import { GetPostsOptions, PaginatedResponse } from "./post-api-types";
 
 export async function getPosts(

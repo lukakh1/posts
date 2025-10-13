@@ -1,4 +1,4 @@
-import { Post } from "@/app/entities/models";
+import { Post } from "@/app/entities";
 import { PostCard } from "@/app/features";
 import { EmptyState } from "./empty-state";
 

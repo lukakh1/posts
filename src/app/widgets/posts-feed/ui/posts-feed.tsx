@@ -1,5 +1,5 @@
 "use client";
-import { usePosts } from "@/app/entities/api/posts";
+import { usePosts } from "@/app/entities";
 import { HeroPostCard, PostCard } from "@/app/features";
 import { ErrorMessage, LoadingIndicator } from "@/app/shared/ui";
 

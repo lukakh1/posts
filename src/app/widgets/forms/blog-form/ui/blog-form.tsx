@@ -1,5 +1,5 @@
 "use client";
-import { useAddBlog } from "@/app/entities/api/blogs";
+import { useAddBlog } from "@/app/entities";
 import { StatusAlert, SubmitButton } from "@/app/shared/ui";
 import { mixpanel } from "@/pkg/libraries/mixpanel";
 import {

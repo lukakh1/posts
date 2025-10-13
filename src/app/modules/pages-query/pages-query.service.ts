@@ -1,4 +1,4 @@
-import { getPosts } from "@/app/entities/api/posts";
+import { getPosts } from "@/app/entities";
 import { handlePrefetchError } from "@/pkg/libraries/error-handler";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useInfinitePosts } from "@/app/entities/api/posts";
+import { useInfinitePosts } from "@/app/entities";
 import { PostCard } from "@/app/features";
 import { ErrorMessage, LoadingIndicator } from "@/app/shared/ui";
 import { Icon } from "@iconify/react";

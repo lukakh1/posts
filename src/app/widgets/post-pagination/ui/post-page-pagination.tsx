@@ -1,5 +1,5 @@
 "use client";
-import { getPosts, usePostsPag } from "@/app/entities/api/posts";
+import { getPosts, usePostsPag } from "@/app/entities";
 import { ErrorMessage, LoadingIndicator } from "@/app/shared/ui";
 import { handleQueryError } from "@/pkg/libraries/error-handler";
 import { useRouter } from "@/pkg/libraries/locale";

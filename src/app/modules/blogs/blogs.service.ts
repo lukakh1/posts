@@ -1,5 +1,4 @@
-import { getBlogs } from "@/app/entities/api/blogs";
-import { Blog } from "@/app/entities/models";
+import { Blog, getBlogs } from "@/app/entities";
 import { ApiResponse } from "@/app/shared/types";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 import type { QueryClient } from "@tanstack/react-query";

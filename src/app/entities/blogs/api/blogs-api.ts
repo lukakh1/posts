@@ -1,11 +1,11 @@
 "use server";
-import { Blog, NewBlog } from "@/app/entities/models";
 import { ApiResponse } from "@/app/shared/types";
 import { handleServerActionError } from "@/pkg/libraries/error-handler";
 import { createFrontClient } from "@/pkg/libraries/supabase";
 import { revalidatePath } from "next/cache";
 
 import { unstable_cache } from "next/cache";
+import { Blog, NewBlog } from "../model";
 
 export const getBlogs = unstable_cache(
   async (): Promise<ApiResponse<Blog[]>> => {

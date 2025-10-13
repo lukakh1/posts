@@ -1,4 +1,4 @@
-import { Blog } from "@/app/entities/models";
+import { Blog } from "@/app/entities";
 import { CardUi } from "@/app/shared/ui";
 
 export default function BlogCard({ blog }: { blog: Blog }) {

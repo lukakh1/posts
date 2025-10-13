@@ -1,6 +1,6 @@
 "use client";
 
-import { Post } from "@/app/entities/models";
+import { Post } from "@/app/entities";
 import { LikeButton } from "@/app/features";
 import { Link } from "@/pkg/libraries/locale";
 import { Card, CardBody, CardFooter, CardHeader, Divider } from "@heroui/react";

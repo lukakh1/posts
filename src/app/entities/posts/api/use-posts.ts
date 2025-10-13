@@ -1,10 +1,10 @@
 "use client";
 
-import { getPosts } from "@/app/entities/api/posts";
-import type { Post } from "@/app/entities/models";
+import { getPosts } from "@/app/entities";
 import { ApiResponse } from "@/app/shared/types";
 import { handleQueryError } from "@/pkg/libraries/error-handler";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { Post } from "../model";
 
 export const postsKeys = {
   all: ["posts"] as const,

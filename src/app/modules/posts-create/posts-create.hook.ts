@@ -1,8 +1,6 @@
 "use client";
 
-import { addPost } from "@/app/entities/api/posts";
-import { postsKeys } from "@/app/entities/api/posts/use-posts";
-import type { NewPost } from "@/app/entities/models";
+import { type NewPost, addPost, postsKeys } from "@/app/entities";
 import { handleQueryError } from "@/pkg/libraries/error-handler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

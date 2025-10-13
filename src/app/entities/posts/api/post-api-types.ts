@@ -1,4 +1,4 @@
-import { Post } from "@/app/entities/models";
+import { Post } from "../model";
 
 export interface GetPostsOptions {
   limit?: number;
