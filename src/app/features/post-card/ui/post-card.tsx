@@ -30,7 +30,7 @@ export default function PostCard({
           {showRead && (
             <div className="flex items-center space-x-4">
               <Link
-                href={`/posts/${post.id}`}
+                href={`/my-site/posts/${post.id}`}
                 className="flex items-center space-x-1 text-xs text-gray-500 transition-colors duration-300 group-hover:text-purple-300"
               >
                 <span>{t("read-more")}</span>

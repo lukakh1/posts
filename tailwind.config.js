@@ -4,8 +4,8 @@ import { heroui } from "@heroui/react";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./node_modules/@heroui/theme/dist/components/(card|input|modal|number-input|ripple|form|button|spinner).js",
-  ],
+    "./node_modules/@heroui/theme/dist/components/(card|input|link|modal|number-input|ripple|form|button|spinner).js"
+],
   theme: {
     extend: {},
   },
