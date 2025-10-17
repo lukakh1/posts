@@ -4,7 +4,7 @@ export type Blog = {
   sub_title?: string;
   body: string;
   created_at: Date;
-  tags?: string[];
+  tags: string[] | null;
 };
 
 export type NewBlog = Omit<Blog, "id" | "created_at">;

@@ -1,6 +1,6 @@
-import { ResultItem } from "../data/result.data";
+import { Result } from "@/app/entities/results";
 
-export function ResultCard({ item }: { item: ResultItem }) {
+export function ResultCard({ item }: { item: Result }) {
   return (
     <article className="bg-white rounded-lg py-6 px-4 border border-blue-200 min-w-[200px]">
       <div className="flex items-start gap-4">
@@ -19,7 +19,7 @@ export function ResultCard({ item }: { item: ResultItem }) {
             d="M9.39 14.537a2.23 2.23 0 0 1-1.344-.446l-1.82-1.366a.75.75 0 1 1 .899-1.2l1.821 1.366a.755.755 0 0 0 1.043-.14l4.344-5.587a.75.75 0 1 1 1.185.922l-4.346 5.586a2.26 2.26 0 0 1-1.782.865"
           ></path>
         </svg>
-        <p className="text-[#2C3345]">{item.text}</p>
+        <p className="text-[#2C3345]">{item.body}</p>
       </div>
     </article>
   );

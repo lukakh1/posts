@@ -1,7 +1,9 @@
 "use server";
 import { ApiResponse } from "@/app/shared/types";
+import { db } from "@/pkg/libraries/drizzle";
+import { blogs } from "@/pkg/libraries/drizzle/schema";
 import { handleServerActionError } from "@/pkg/libraries/error-handler";
-import { createFrontClient } from "@/pkg/libraries/supabase";
+import { desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { unstable_cache } from "next/cache";
@@ -10,18 +12,12 @@ import { Blog, NewBlog } from "../model";
 export const getBlogs = unstable_cache(
   async (): Promise<ApiResponse<Blog[]>> => {
     try {
-      const supabase = await createFrontClient();
+      const rows = await db
+        .select()
+        .from(blogs)
+        .orderBy(desc(blogs.created_at));
 
-      const { data, error } = await supabase
-        .from("blogs")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        throw error;
-      }
-
-      return { success: true, data: data };
+      return { success: true, data: rows as Blog[] };
     } catch (error: unknown) {
       const errorMessage = handleServerActionError(error, "getBlogs", {
         table: "blogs",
@@ -38,21 +34,19 @@ export const getBlogs = unstable_cache(
 
 export async function addBlog(blog: NewBlog): Promise<ApiResponse<Blog>> {
   try {
-    const supabase = await createFrontClient();
-
-    const { data, error: insertError } = await supabase
-      .from("blogs")
-      .insert(blog)
-      .select()
-      .single();
-
-    if (insertError) {
-      throw insertError;
-    }
+    const [inserted] = await db
+      .insert(blogs)
+      .values({
+        title: blog.title,
+        subTitle: blog.sub_title ?? null,
+        body: blog.body,
+        tags: blog.tags ?? null,
+      })
+      .returning();
 
     revalidatePath("/blogs");
 
-    return { success: true, data: data };
+    return { success: true, data: inserted };
   } catch (error: unknown) {
     const errorMessage = handleServerActionError(error, "addBlog", {
       blogData: {

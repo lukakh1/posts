@@ -1,7 +1,7 @@
-import { testsData } from "../data/tests.data";
+import { IqTest } from "@/app/entities/iq-tests/model/iq-test.model";
 import { TestCard } from "./test-card";
 
-export const TestsDisplay = () => {
+export const TestsDisplay = ({ testsData }: { testsData: IqTest[] }) => {
   return (
     <section className="py-8">
       <div className="container mx-auto px-4">
@@ -15,9 +15,15 @@ export const TestsDisplay = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-8">
+        <div className="flex gap-6 pt-8 overflow-x-auto pb-4">
           {testsData.map((test) => (
-            <TestCard key={test.id} test={test} />
+            <div
+              key={test.id}
+              className="flex-shrink-0"
+              style={{ width: `calc((100% - (3 * 1.5rem)) / 4)` }}
+            >
+              <TestCard test={test} />
+            </div>
           ))}
         </div>
       </div>

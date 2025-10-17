@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     },
   },
 
-  serverExternalPackages: ["pino", "pino-pretty"],
+  serverExternalPackages: ["pino", "pino-pretty", "postgres"],
 
   experimental: {
     reactCompiler: true,
