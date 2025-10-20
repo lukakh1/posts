@@ -7,7 +7,7 @@ export const revalidate = 30;
 export default async function Home() {
   const t = await getTranslations("HomePage");
   const queryClient = await prefetchHomeQueries();
-  const { postDisplay, postCardType } = readHomeFlags();
+  const { postDisplay, postCardType } = await readHomeFlags();
 
   return (
     <>

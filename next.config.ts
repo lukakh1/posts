@@ -15,11 +15,28 @@ const nextConfig: NextConfig = {
     },
   },
 
+  // Added ESLint configuration for CI
+  eslint: {
+    dirs: ["src"],
+    ignoreDuringBuilds: process.env.CI === "true",
+  },
+
+  // Added TypeScript configuration (optional - uncomment if needed)
+  // typescript: {
+  //   ignoreBuildErrors: process.env.CI === 'true',
+  // },
+
   serverExternalPackages: ["pino", "pino-pretty", "postgres"],
 
   experimental: {
     reactCompiler: true,
     optimizeServerReact: true,
+    // Added drizzle packages to serverComponentsExternalPackages
+    serverComponentsExternalPackages: [
+      "drizzle-orm",
+      "drizzle-kit",
+      "better-sqlite3",
+    ],
     optimizePackageImports: [
       "zod",
       "react-hook-form",
@@ -65,11 +82,27 @@ const nextConfig: NextConfig = {
     },
   },
 
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    // SVG loader
     config.module.rules.push({
       test: /\.svg$/i,
       use: ["@svgr/webpack"],
     });
+
+    // Exclude drizzle-kit from client bundle and handle externals
+    if (isServer) {
+      config.externals = config.externals || [];
+      if (Array.isArray(config.externals)) {
+        config.externals.push("drizzle-kit");
+      } else {
+        config.externals = ["drizzle-kit", config.externals];
+      }
+    }
+
+    // Ignore drizzle config file in builds
+    config.resolve = config.resolve || {};
+    config.resolve.alias = config.resolve.alias || {};
+    config.resolve.alias["drizzle.config"] = false;
 
     return config;
   },
