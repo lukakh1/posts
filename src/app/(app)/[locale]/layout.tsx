@@ -15,7 +15,7 @@ import { getLangDir } from "rtl-detect";
 interface IProps {
   children: ReactNode;
   params: Promise<{ locale: Locale }>;
-  postmodal: ReactNode;
+  postmodal?: ReactNode;
 }
 
 export function generateStaticParams() {
@@ -54,7 +54,7 @@ const RootLayout: FC<Readonly<IProps>> = async (props) => {
             <RestApiProvider>
               <HydrationBoundary state={dehydrate(clientQuery)}>
                 <LikeStoreProvider>
-                  {postmodal}
+                  {postmodal && postmodal}
                   {children}
                 </LikeStoreProvider>
               </HydrationBoundary>

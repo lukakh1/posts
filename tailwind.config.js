@@ -2,10 +2,11 @@
 import { heroui } from "@heroui/react";
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "./node_modules/@heroui/theme/dist/components/(card|input|link|modal|number-input|ripple|form|button|spinner).js"
-],
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/components/(card|input|link|modal|number-input|ripple|form|button|spinner).js",
+  ],
   theme: {
     extend: {},
   },

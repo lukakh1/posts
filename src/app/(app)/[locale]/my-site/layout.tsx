@@ -3,13 +3,19 @@ import { type FC, type ReactNode } from "react";
 
 interface IProps {
   children: ReactNode;
+  postmodal: ReactNode;
 }
 
 // component
 const RootLayout: FC<Readonly<IProps>> = (props) => {
-  const { children } = props;
+  const { children, postmodal } = props;
 
-  return <LayoutModule>{children}</LayoutModule>;
+  return (
+    <LayoutModule>
+      {postmodal}
+      {children}
+    </LayoutModule>
+  );
 };
 
 export default RootLayout;
