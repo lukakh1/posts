@@ -4,6 +4,7 @@ import { ErrorMessage } from "./error";
 import { StatusAlert, SubmitButton } from "./form-components";
 import { GuideCard } from "./guide-card";
 import { CustomLink } from "./link-button";
+import { LinkCard } from "./link-card";
 import { LoadingIndicator } from "./loading";
 import { Logo } from "./logo";
 import { StarRating } from "./star-rating";
@@ -14,6 +15,7 @@ export {
   CustomLink,
   ErrorMessage,
   GuideCard,
+  LinkCard,
   LoadingIndicator,
   Logo,
   StarRating,

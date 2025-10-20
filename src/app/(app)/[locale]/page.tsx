@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LinkCard } from "@/app/shared";
 
 export default function Home() {
   return (
@@ -12,49 +12,30 @@ export default function Home() {
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Link
+          <LinkCard
             href="/my-site"
-            className="group rounded-xl border border-blue-200 bg-white p-6 text-left shadow-sm transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-[#2B2D42]">
-                  Visit Site
-                </h2>
-                <p className="mt-1 text-sm text-gray-600">
-                  Explore the demo website experience.
-                </p>
-              </div>
-              <span
-                aria-hidden
-                className="ml-4 h-9 w-9 shrink-0 rounded-full bg-blue-100 text-blue-600 grid place-items-center transition group-hover:bg-blue-200"
-              >
-                →
-              </span>
-            </div>
-          </Link>
+            title="Visit Site"
+            description="Explore the demo website experience."
+          />
 
-          <Link
+          <LinkCard
             href="/iq-test"
-            className="group rounded-xl border border-blue-200 bg-white p-6 text-left shadow-sm transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-[#2B2D42]">
-                  Take IQ Test
-                </h2>
-                <p className="mt-1 text-sm text-gray-600">
-                  Start the assessment and view your results.
-                </p>
-              </div>
-              <span
-                aria-hidden
-                className="ml-4 h-9 w-9 shrink-0 rounded-full bg-blue-100 text-blue-600 grid place-items-center transition group-hover:bg-blue-200"
-              >
-                →
-              </span>
-            </div>
-          </Link>
+            title="Take IQ Test"
+            description="Start the assessment and view your results."
+          />
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <LinkCard
+            href="/login"
+            title="Login"
+            description="Login to your account."
+          />
+
+          <LinkCard
+            href="/signup"
+            title="Signup"
+            description="Create a new account."
+          />
         </div>
       </div>
     </main>
