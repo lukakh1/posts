@@ -3,6 +3,8 @@ import { ButtonHTMLAttributes } from "react";
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
+  className?: string;
+  children: React.ReactNode;
 }
 
 export function SubmitButton({

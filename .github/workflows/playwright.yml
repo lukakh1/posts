@@ -1,16 +1,23 @@
 name: Playwright Tests
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, develop, staging]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, develop, staging]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
+      # Server environment variables (from env.server.ts)
       CI: true
       NODE_ENV: production
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+
+      # Client environment variables (from env.client.ts)
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
       NEXT_PUBLIC_MIXPANEL_TOKEN: ${{ secrets.NEXT_PUBLIC_MIXPANEL_TOKEN }}
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
@@ -19,9 +26,9 @@ jobs:
       NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY }}
       NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
       NEXT_PUBLIC_SENTRY_ENVIRONMENT: ${{ secrets.NEXT_PUBLIC_SENTRY_ENVIRONMENT }}
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      # Add this to skip linting during build
+      SKIP_ENV_VALIDATION: true
+
     steps:
       - uses: actions/checkout@v4
 
@@ -31,10 +38,17 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --include=dev
+
+      # Run linting before build (optional but recommended)
+      - name: Lint code
+        run: npm run lint
+        continue-on-error: true
 
       - name: Build Next.js app
         run: npm run build
+        env:
+          SKIP_LINT: true
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps

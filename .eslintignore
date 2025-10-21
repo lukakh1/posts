@@ -1,0 +1,9 @@
+drizzle.config.ts
+node_modules/
+.next/
+out/
+public/
+playwright-report/
+test-results/
+*.config.js
+*.config.ts

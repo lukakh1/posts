@@ -9,3 +9,6 @@ export * from "./providers";
 
 // API utilities
 export * from "./types";
+
+// Assets
+export * from "./assets";

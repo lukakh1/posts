@@ -79,7 +79,12 @@ export default function BlogForm() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setStatus(null);
     try {
-      await addBlogMutation.mutateAsync(data);
+      // Transform undefined tags to null to match NewBlog type
+      const blogData = {
+        ...data,
+        tags: data.tags ?? null,
+      };
+      await addBlogMutation.mutateAsync(blogData);
       setStatus({
         type: "success",
         message: "Blog has been created successfully.",

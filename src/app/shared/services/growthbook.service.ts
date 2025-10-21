@@ -7,4 +7,9 @@ export const attributes: { [key: string]: string } = {
 };
 
 export const gb = getGB({ attributes });
-await gb.init();
+
+// Initialize GrowthBook instance
+export const initializeGrowthBook = async () => {
+  await gb.init();
+  return gb;
+};

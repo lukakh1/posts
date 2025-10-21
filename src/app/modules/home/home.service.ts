@@ -1,5 +1,8 @@
 import { getPosts } from "@/app/entities";
-import { gb } from "@/app/shared/services/growthbook.service";
+import {
+  gb,
+  initializeGrowthBook,
+} from "@/app/shared/services/growthbook.service";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 
 export type HomeFlags = {
@@ -7,7 +10,10 @@ export type HomeFlags = {
   postCardType: number;
 };
 
-export function readHomeFlags(): HomeFlags {
+export async function readHomeFlags(): Promise<HomeFlags> {
+  // Initialize GrowthBook before reading flags
+  await initializeGrowthBook();
+
   return {
     postDisplay: gb.getFeatureValue("post-display", true),
     postCardType: gb.getFeatureValue("post-card-style", 0),
