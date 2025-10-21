@@ -3,7 +3,7 @@ import { loggerUtil } from "./utils";
 
 test.describe("Posts Feed on Main Page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/en");
+    await page.goto("/my-site");
     await page.waitForLoadState("networkidle");
   });
 

@@ -8,14 +8,22 @@ export const envServer = createEnv({
       .enum(["development", "production"])
       .optional()
       .default("development"),
-    DATABASE_URL: z.string().min(1, { message: "DATABASE_URL is required" }),
+    DATABASE_URL: z
+      .string()
+      .min(1, { message: "DATABASE_URL is required" })
+      .default("postgresql://test:test@localhost:5432/test"),
     SENTRY_AUTH_TOKEN: z
       .string()
-      .min(1, { message: "SENTRY_AUTH_TOKEN is required" }),
-    SENTRY_ORG: z.string().min(1, { message: "SENTRY_ORG is required" }),
+      .min(1, { message: "SENTRY_AUTH_TOKEN is required" })
+      .default("test-sentry-auth-token"),
+    SENTRY_ORG: z
+      .string()
+      .min(1, { message: "SENTRY_ORG is required" })
+      .default("test-org"),
     SENTRY_PROJECT: z
       .string()
-      .min(1, { message: "SENTRY_PROJECT is required" }),
+      .min(1, { message: "SENTRY_PROJECT is required" })
+      .default("test-project"),
     CI: z
       .string()
       .transform((val) => val === "true")
