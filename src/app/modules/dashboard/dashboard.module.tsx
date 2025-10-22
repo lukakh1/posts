@@ -2,8 +2,8 @@
 
 import { useOrders } from "@/app/entities/api/orders";
 import { Order } from "@/app/entities/models";
+import { HeroTable } from "@/app/features";
 import { LoadingIndicator } from "@/app/shared/ui";
-import { HeroTable } from "@/app/widgets";
 
 interface DashboardModuleProps {
   initialData?: {

@@ -1,7 +1,7 @@
 "use client";
 import { usePosts } from "@/app/entities/api/posts";
+import { HeroPostCard, PostCard } from "@/app/features";
 import { ErrorMessage, LoadingIndicator } from "@/app/shared/ui";
-import { HeroPostCard, PostCard } from "@/app/widgets";
 
 interface PostsFeedProps {
   postCardType: number;

@@ -1,7 +1,7 @@
 "use client";
 import { Post } from "@/app/entities/models";
+import { LikeButton } from "@/app/features";
 import { useLikeStore } from "@/app/shared/providers";
-import { LikeButton } from "@/app/widgets";
 import { mixpanel } from "@/pkg/libraries/mixpanel";
 import { useEffect } from "react";
 

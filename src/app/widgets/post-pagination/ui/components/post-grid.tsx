@@ -1,5 +1,5 @@
 import { Post } from "@/app/entities/models";
-import { PostCard } from "@/app/widgets";
+import { PostCard } from "@/app/features";
 import { EmptyState } from "./empty-state";
 
 interface PostsGridProps {

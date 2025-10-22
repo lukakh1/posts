@@ -1,4 +1,4 @@
-import { Header } from "@/app/widgets";
+import { Header } from "@/app/features";
 import { type FC, type ReactNode } from "react";
 
 // interface

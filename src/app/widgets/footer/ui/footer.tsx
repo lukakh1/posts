@@ -1,4 +1,4 @@
-import { LocaleSwitcher } from "@/app/widgets";
+import { LocaleSwitcher } from "@/app/features";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 

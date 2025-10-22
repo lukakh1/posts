@@ -1,4 +1,4 @@
-import { Footer, IqTestHeader } from "@/app/widgets";
+import { Footer, IqTestHeader } from "@/app/features";
 import { type FC, type ReactNode } from "react";
 
 // interface
