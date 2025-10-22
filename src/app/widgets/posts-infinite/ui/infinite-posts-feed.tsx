@@ -1,8 +1,8 @@
 "use client";
 
 import { useInfinitePosts } from "@/app/entities/api/posts";
+import { PostCard } from "@/app/features";
 import { ErrorMessage, LoadingIndicator } from "@/app/shared/ui";
-import { PostCard } from "@/app/widgets";
 import { Icon } from "@iconify/react";
 import { useEffect, useRef } from "react";
 

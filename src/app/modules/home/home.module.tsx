@@ -1,4 +1,4 @@
-import { PostsFeed } from "@/app/features";
+import { PostsFeed } from "@/app/widgets";
 
 export default function HomeModule({
   postDisplay,

@@ -1,7 +1,7 @@
 "use client";
 import { Post } from "@/app/entities/models";
+import { LikeButton } from "@/app/features";
 import { CardUi } from "@/app/shared/ui";
-import { LikeButton } from "@/app/widgets";
 import { Link } from "@/pkg/libraries/locale";
 import { useTranslations } from "next-intl";
 

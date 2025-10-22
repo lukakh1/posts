@@ -1,4 +1,4 @@
-import { LocaleSwitcher } from "@/app/widgets";
+import { LocaleSwitcher } from "@/app/features";
 import { Link } from "@/pkg/libraries/locale";
 import { useTranslations } from "next-intl";
 
