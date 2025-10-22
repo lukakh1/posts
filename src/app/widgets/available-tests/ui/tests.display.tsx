@@ -15,13 +15,9 @@ export const TestsDisplay = ({ testsData }: { testsData: IqTest[] }) => {
           </p>
         </div>
 
-        <div className="flex gap-6 pt-8 overflow-x-auto pb-4">
-          {testsData.map((test) => (
-            <div
-              key={test.id}
-              className="flex-shrink-0"
-              style={{ width: `calc((100% - (3 * 1.5rem)) / 4)` }}
-            >
+        <div className="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-8 pb-4">
+          {testsData.slice(0, 4).map((test) => (
+            <div key={test.id} className="w-full">
               <TestCard test={test} />
             </div>
           ))}
