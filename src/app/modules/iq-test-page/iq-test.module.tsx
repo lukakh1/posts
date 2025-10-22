@@ -1,10 +1,10 @@
-import { FAQ, Pricing, Statistics } from "@/app/widgets";
-import { TestsDisplay } from "@/app/widgets/available-tests";
-import { BoostAbilities } from "@/app/widgets/boost-abilities";
-import { Community } from "@/app/widgets/community";
-import { Hero } from "@/app/widgets/hero";
-import { HowItWorks } from "@/app/widgets/hoow-it-works";
-import { ResultDisplay } from "@/app/widgets/result";
+import { FAQ, Pricing, Statistics } from "@/app/features";
+import { TestsDisplay } from "@/app/features/available-tests";
+import { BoostAbilities } from "@/app/features/boost-abilities";
+import { Community } from "@/app/features/community";
+import { Hero } from "@/app/features/hero";
+import { HowItWorks } from "@/app/features/hoow-it-works";
+import { ResultDisplay } from "@/app/features/result";
 import { fetchIqTests, fetchResults } from "./iq-test.service";
 
 export async function IqTestsModule() {

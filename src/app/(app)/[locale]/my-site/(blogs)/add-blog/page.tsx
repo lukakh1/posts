@@ -1,4 +1,4 @@
-import { BlogForm } from "@/app/widgets";
+import { BlogForm } from "@/app/features";
 
 export default function AddPost() {
   return (

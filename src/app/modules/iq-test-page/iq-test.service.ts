@@ -1,5 +1,6 @@
-import { getIqTests, type IqTest } from "@/app/entities/iq-tests";
-import { getResults, type Result } from "@/app/entities/results";
+import { getIqTests } from "@/app/entities/api/iq-test";
+import { getResults } from "@/app/entities/api/results";
+import { IqTest, Result } from "@/app/entities/models";
 import { ApiResponse } from "@/app/shared/types";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 
@@ -24,5 +25,3 @@ export async function fetchResults(): Promise<Result[]> {
   const cached = queryClient.getQueryData<ApiResponse<Result[]>>(["results"]);
   return cached?.data ?? [];
 }
-
-// Removed fetchStatistics; rotating statistics uses its own hook

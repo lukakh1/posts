@@ -1,7 +1,7 @@
 "use client";
 
+import { LoginForm } from "@/app/features";
 import { CustomLink } from "@/app/shared";
-import LoginForm from "@/app/widgets/forms/login-form/ui/login.form";
 import { motion } from "framer-motion";
 
 export default function LoginModule() {

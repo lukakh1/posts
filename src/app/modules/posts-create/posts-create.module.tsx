@@ -1,4 +1,4 @@
-import { PostForm } from "@/app/widgets";
+import { PostForm } from "@/app/features";
 
 export default function PostsCreateModule() {
   return (

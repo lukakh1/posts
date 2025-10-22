@@ -1,9 +1,8 @@
-export { FAQ } from "./FAQ";
-export * from "./forms";
-export { Header } from "./header";
-export * from "./post-content";
-export { PostPagePagination } from "./post-pagination";
-export { PostsFeed } from "./posts-feed";
-export { InfinitePostsFeed } from "./posts-infinite";
-export { Pricing } from "./pricing";
-export { Statistics } from "./statistics";
+export * from "./blog-card";
+export * from "./footer";
+export * from "./header";
+export * from "./iq-test-header";
+export { LikeButton } from "./like-button";
+export { LocaleSwitcher } from "./locale-switcher";
+export * from "./post-card";
+export * from "./table";

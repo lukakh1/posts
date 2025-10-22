@@ -1,7 +1,7 @@
 "use client";
 
+import { SignupForm } from "@/app/features";
 import { CustomLink } from "@/app/shared";
-import { SignupForm } from "@/app/widgets/forms/signup-form";
 import { motion } from "framer-motion";
 
 export default function SignupModule() {

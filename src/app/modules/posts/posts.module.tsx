@@ -1,5 +1,5 @@
-import { Post } from "@/app/entities";
-import { PostContent } from "@/app/widgets/post-content";
+import { Post } from "@/app/entities/models";
+import { PostContent } from "@/app/features";
 
 export default function PostsModule({ post }: { post: Post }) {
   return (

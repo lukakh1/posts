@@ -1,4 +1,4 @@
-import { Post } from "@/app/entities";
+import { Post } from "@/app/entities/models";
 import {
   PostsModule,
   getPostsForStaticParams,

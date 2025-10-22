@@ -50,3 +50,13 @@ export const statistics = pgTable("statistics", {
 
 export type statisticsRow = typeof statistics.$inferSelect;
 export type NewStatisticsRow = typeof statistics.$inferInsert;
+
+export const orders = pgTable("orders", {
+  id: bigint("id", { mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  name: text("name").notNull(),
+  total: integer("total").notNull(),
+});
+
+export type OrderRow = typeof orders.$inferSelect;
+export type NewOrderRow = typeof orders.$inferInsert;

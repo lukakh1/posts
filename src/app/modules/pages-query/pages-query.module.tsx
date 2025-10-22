@@ -1,4 +1,4 @@
-import { PostPagePagination } from "@/app/widgets/post-pagination";
+import { PostPagePagination } from "@/app/features";
 
 export default function PagesQueryModule() {
   return <PostPagePagination />;
