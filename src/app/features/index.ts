@@ -1,4 +1,8 @@
-export * from "./blog-card";
-export { LikeButton } from "./like-button";
-export { LocaleSwitcher } from "./locale-switcher";
-export * from "./post-card";
+export { FAQ } from "./FAQ";
+export * from "./forms";
+export * from "./post-content";
+export { PostPagePagination } from "./post-pagination";
+export { PostsFeed } from "./posts-feed";
+export { InfinitePostsFeed } from "./posts-infinite";
+export { Pricing } from "./pricing";
+export { Statistics } from "./statistics";

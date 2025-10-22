@@ -1,4 +1,4 @@
-import { InfinitePostsFeed } from "@/app/widgets/posts-infinite";
+import { InfinitePostsFeed } from "@/app/features";
 
 export default function InfiniteQueryModule() {
   return <InfinitePostsFeed />;

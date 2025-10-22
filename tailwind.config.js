@@ -5,7 +5,7 @@ import { heroui } from "@heroui/react";
 export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@heroui/theme/dist/components/(card|input|link|modal|number-input|ripple|form|button|spinner).js",
+    "./node_modules/@heroui/theme/dist/components/(card|input|link|modal|number-input|table|ripple|form|button|spinner|checkbox|spacer).js"
   ],
   theme: {
     extend: {},

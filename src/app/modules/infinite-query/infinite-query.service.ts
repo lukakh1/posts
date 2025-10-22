@@ -1,4 +1,5 @@
-import { Post, getPosts } from "@/app/entities";
+import { getPosts } from "@/app/entities/api/posts";
+import { Post } from "@/app/entities/models";
 import { ApiResponse } from "@/app/shared/types";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 

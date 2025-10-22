@@ -1,4 +1,4 @@
-import { getPosts } from "@/app/entities";
+import { getPosts } from "@/app/entities/api/posts";
 import {
   gb,
   initializeGrowthBook,
