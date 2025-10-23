@@ -10,3 +10,4 @@ export { LocaleSwitcher } from "./locale-switcher";
 export * from "./pagination";
 export * from "./post-card";
 export * from "./table";
+export * from "./test-page-cards";

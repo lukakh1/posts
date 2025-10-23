@@ -1,4 +1,4 @@
-import { AbilityData } from "../data/abilities.data";
+import { AbilityData } from "./ability-card.types";
 
 interface AbilityCardProps {
   ability: AbilityData;
@@ -6,7 +6,7 @@ interface AbilityCardProps {
 
 export function AbilityCard({ ability }: AbilityCardProps) {
   return (
-    <div className="flex flex-col bg-white rounded-2xl py-6 px-4 border border-gray-200 hover:shadow-md transition-shadow duration-200 gap-3">
+    <div className="flex h-full flex-col bg-white rounded-2xl py-6 px-4 border border-gray-200 hover:shadow-md transition-shadow duration-200 gap-3">
       <div className="flex">
         <div className="w-[42px] h-[42px] rounded-full flex items-center justify-center bg-gradient-to-r from-[#007AFF] to-[#7CB7F8] p-[3px]">
           <div className="w-full h-full rounded-full bg-white flex items-center justify-center">

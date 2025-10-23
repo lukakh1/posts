@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomLink } from "@/app/shared";
-import type { PricingPlan } from "../data/pricing.data";
+import type { PricingPlan } from "./pricing-card.types";
 
 type Props = {
   plan: PricingPlan;

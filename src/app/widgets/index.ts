@@ -1,4 +1,5 @@
 export * from "./auth-widget";
+export * from "./content-display";
 export * from "./data-display-block";
 export { FAQ } from "./FAQ";
 export { Footer } from "./footer";
@@ -6,5 +7,4 @@ export * from "./form-widget";
 export { Header } from "./header";
 export { IqTestHeader } from "./iq-test-header";
 export * from "./posts-widget";
-export { Pricing } from "./pricing";
 export { Statistics } from "./statistics";

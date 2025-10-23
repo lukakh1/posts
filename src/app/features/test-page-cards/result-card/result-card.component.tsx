@@ -2,7 +2,7 @@ import { Result } from "@/app/entities/models";
 
 export function ResultCard({ item }: { item: Result }) {
   return (
-    <article className="bg-white rounded-lg py-6 px-4 border border-blue-200 min-w-[200px]">
+    <article className="flex h-full bg-white rounded-lg py-6 px-4 border border-blue-200 min-w-[200px]">
       <div className="flex items-start gap-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"

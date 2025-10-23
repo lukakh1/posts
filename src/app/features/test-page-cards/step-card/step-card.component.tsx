@@ -10,7 +10,7 @@ type StepCardProps = {
 
 const StepCard: React.FC<StepCardProps> = ({ icon, title, description }) => {
   return (
-    <GuideCard className="flex items-start">
+    <GuideCard className="flex h-full items-start">
       <div className="flex-1">
         <Icon icon={icon} className="text-4xl text-[#0D766E] mb-3" />
         <h3 className="text-xl font-semibold text-slate-800">{title}</h3>
