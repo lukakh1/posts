@@ -3,7 +3,7 @@ import { getPosts, usePostsPag } from "@/app/entities/api/posts";
 import { ErrorMessage, LoadingIndicator } from "@/app/shared/ui";
 import { handleQueryError } from "@/pkg/libraries/error-handler";
 import { useRouter } from "@/pkg/libraries/locale";
-import { useQueryClient } from "@tanstack/react-query";
+import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { PaginationControls, PaginationStats, PostsGrid } from "./components";
@@ -11,7 +11,7 @@ import { PaginationControls, PaginationStats, PostsGrid } from "./components";
 export default function PostPagePagination() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryClient = useQueryClient();
+  const queryClient = getQueryClient();
 
   const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
   const limit = 8;

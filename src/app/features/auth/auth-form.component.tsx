@@ -2,34 +2,45 @@
 import { useAuth } from "@/app/entities/api/auth";
 import { GoogleSvg, SubmitButton } from "@/app/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { type SignupInputs, SignupSchema } from "../model/validation";
+import {
+  LoginSchema,
+  SignupSchema,
+  type LoginFormData,
+  type SignupFormData,
+} from "./auth.schemas";
+import { AUTH_CONFIGS, AuthType } from "./auth.types";
 
-export default function SignupForm() {
+interface AuthFormProps {
+  type: AuthType;
+}
+
+export default function AuthForm({ type }: AuthFormProps) {
   const { authenticate, errorMessage, isLoading } = useAuth();
+  const isLogin = type === "login";
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupInputs>({ resolver: zodResolver(SignupSchema) });
+  } = useForm<LoginFormData | SignupFormData>({
+    resolver: zodResolver(isLogin ? LoginSchema : SignupSchema),
+  });
 
-  const onSubmit: SubmitHandler<SignupInputs> = (data) => {
-    authenticate("signup", data);
+  const onSubmit: SubmitHandler<LoginFormData | SignupFormData> = (data) => {
+    authenticate(isLogin ? "signin" : "signup", data);
   };
 
   const handleGmailLogin = () => {
     authenticate("google");
   };
 
+  const config = AUTH_CONFIGS[type];
+
   return (
-    <motion.form
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-y-4 border border-slate-100 rounded-3xl p-8 bg-slate-600 shadow-lg"
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
     >
       {errorMessage && (
         <div className="text-red-300 text-center mb-2 p-3 bg-red-900/20 rounded-lg border border-red-800">
@@ -44,9 +55,7 @@ export default function SignupForm() {
           onClick={handleGmailLogin}
           disabled={isLoading}
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-            <GoogleSvg />
-          </motion.div>
+          <GoogleSvg />
           Continue with Google
         </SubmitButton>
       </div>
@@ -92,22 +101,30 @@ export default function SignupForm() {
         )}
       </div>
 
-      <div className="space-y-1">
-        <label htmlFor="reppassword" className="text-slate-200 font-medium">
-          Repeat password
-        </label>
-        <input
-          id="reppassword"
-          className="w-full px-4 py-3 rounded-lg bg-slate-800 text-slate-100 border border-slate-700 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
-          type="password"
-          {...register("confirmPassword", { required: true })}
-        />
-        {errors.confirmPassword && (
-          <span className="text-red-300 text-sm block mt-1">
-            {errors.confirmPassword.message}
-          </span>
-        )}
-      </div>
+      {!isLogin && (
+        <div className="space-y-1">
+          <label
+            htmlFor="confirmPassword"
+            className="text-slate-200 font-medium"
+          >
+            Repeat password
+          </label>
+          <input
+            id="confirmPassword"
+            className="w-full px-4 py-3 rounded-lg bg-slate-800 text-slate-100 border border-slate-700 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
+            type="password"
+            {...register("confirmPassword", { required: true })}
+          />
+          {(errors as Record<string, { message: string }>).confirmPassword && (
+            <span className="text-red-300 text-sm block mt-1">
+              {
+                (errors as Record<string, { message: string }>).confirmPassword
+                  ?.message
+              }
+            </span>
+          )}
+        </div>
+      )}
 
       <div>
         <button
@@ -115,9 +132,9 @@ export default function SignupForm() {
           type="submit"
           disabled={isLoading}
         >
-          {isLoading ? "Signing Up..." : "Sign Up"}
+          {isLoading ? config.loadingText : config.submitText}
         </button>
       </div>
-    </motion.form>
+    </form>
   );
 }

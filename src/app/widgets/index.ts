@@ -1,6 +1,7 @@
+export * from "./auth-widget";
 export { FAQ } from "./FAQ";
 export { Footer } from "./footer";
-export * from "./forms";
+export * from "./form-widget";
 export { Header } from "./header";
 export { IqTestHeader } from "./iq-test-header";
 export * from "./post-content";
