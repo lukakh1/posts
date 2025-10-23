@@ -5,8 +5,6 @@ export { Footer } from "./footer";
 export * from "./form-widget";
 export { Header } from "./header";
 export { IqTestHeader } from "./iq-test-header";
-export * from "./post-content";
-export { PostContent } from "./post-content";
 export * from "./posts-widget";
 export { Pricing } from "./pricing";
 export { Statistics } from "./statistics";

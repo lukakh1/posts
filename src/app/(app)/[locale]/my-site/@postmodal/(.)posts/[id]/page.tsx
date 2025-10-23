@@ -1,10 +1,10 @@
-import { Post } from "@/app/entities/models";
 import {
-  PostsModule,
   getPostsForStaticParams,
   getPrefetchedPostFromCache,
   prefetchSinglePost,
-} from "@/app/modules";
+} from "@/app/entities/api/posts/posts-service";
+import { Post } from "@/app/entities/models";
+import { PostCard } from "@/app/features";
 import { SlugProps } from "@/app/shared";
 import PostModal from "@/app/shared/ui/modal/modal";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
@@ -29,7 +29,9 @@ export default async function Page({ params }: SlugProps) {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PostModal>
-        <PostsModule post={post} />
+        <div className="w-full">
+          <PostCard post={post} showRead={false} />
+        </div>
       </PostModal>
     </HydrationBoundary>
   );
