@@ -1,12 +1,10 @@
+export * from "./auth-widget";
+export * from "./content-display";
+export * from "./data-display-block";
 export { FAQ } from "./FAQ";
 export { Footer } from "./footer";
-export * from "./forms";
+export * from "./form-widget";
 export { Header } from "./header";
 export { IqTestHeader } from "./iq-test-header";
-export * from "./post-content";
-export { PostContent } from "./post-content";
-export { PostPagePagination } from "./post-pagination";
-export { PostsFeed } from "./posts-feed";
-export { InfinitePostsFeed } from "./posts-infinite";
-export { Pricing } from "./pricing";
+export * from "./posts-widget";
 export { Statistics } from "./statistics";

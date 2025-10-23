@@ -13,3 +13,19 @@ export const initializeGrowthBook = async () => {
   await gb.init();
   return gb;
 };
+
+// Home flags and prefetching
+export type HomeFlags = {
+  postDisplay: boolean;
+  postCardType: number;
+};
+
+export async function readHomeFlags(): Promise<HomeFlags> {
+  // Initialize GrowthBook before reading flags
+  await initializeGrowthBook();
+
+  return {
+    postDisplay: gb.getFeatureValue("post-display", true),
+    postCardType: gb.getFeatureValue("post-card-style", 0),
+  } as HomeFlags;
+}

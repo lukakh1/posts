@@ -1,5 +1,6 @@
+"use client";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LoginInputs, SignupInputs } from "../../models";
 import { signInWithEmail, signInWithGmail, signUpNewUser } from "./auth.api";
@@ -9,7 +10,6 @@ type AuthData = LoginInputs | SignupInputs;
 
 export const useAuth = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const signInMutation = useMutation({
@@ -32,7 +32,7 @@ export const useAuth = () => {
 
   function handleSuccess(data: { success: boolean; error?: string } | void) {
     if (data?.success) {
-      router.push(searchParams.get("redirectTo") || "/");
+      router.push("/");
     } else if (data?.error) {
       setErrorMessage(
         data?.error || "Authentication failed. Please try again."

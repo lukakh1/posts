@@ -1,5 +1,10 @@
-import { PostsCreateModule } from "@/app/modules";
+import { UnifiedForm } from "@/app/features";
+import { FormWidget } from "@/app/widgets";
 
 export default function AddPost() {
-  return <PostsCreateModule />;
+  return (
+    <FormWidget type="post">
+      <UnifiedForm type="post" />
+    </FormWidget>
+  );
 }

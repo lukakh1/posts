@@ -1,13 +1,14 @@
-import { HomeModule, prefetchHomeQueries, readHomeFlags } from "@/app/modules";
+import { prefetchPosts } from "@/app/entities/api/posts";
+import { PostsWidget } from "@/app/widgets";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getTranslations } from "next-intl/server";
 
 export const revalidate = 30;
+export const dynamic = "force-static";
 
 export default async function Home() {
   const t = await getTranslations("HomePage");
-  const queryClient = await prefetchHomeQueries();
-  const { postDisplay, postCardType } = await readHomeFlags();
+  const queryClient = await prefetchPosts();
 
   return (
     <>
@@ -18,7 +19,11 @@ export default async function Home() {
         {t("description")}
       </p>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <HomeModule postDisplay={postDisplay} postCardType={postCardType} />
+        <PostsWidget
+          displayType="simple"
+          className="mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          testId="post-data"
+        />
       </HydrationBoundary>
     </>
   );
