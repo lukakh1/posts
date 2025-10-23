@@ -1,6 +1,8 @@
 import { AuthForm } from "@/app/features";
 import { CustomLink } from "@/app/shared";
 
+export const dynamic = "force-static";
+
 export default function LoginPage() {
   return (
     <div className="max-h-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-800 via-slate-100 to-blue-400 px-4 overflow-hidden">

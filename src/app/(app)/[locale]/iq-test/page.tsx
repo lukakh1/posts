@@ -13,6 +13,9 @@ import { Community } from "@/app/widgets/community";
 import { ContentDisplay } from "@/app/widgets/content-display";
 import { Hero } from "@/app/widgets/hero";
 
+export const revalidate = 30;
+export const dynamic = "force-static";
+
 export default async function IqTestPage() {
   const tests = await fetchIqTests();
   const results = await fetchResults();

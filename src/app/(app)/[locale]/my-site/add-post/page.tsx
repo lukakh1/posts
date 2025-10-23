@@ -1,6 +1,8 @@
 import { UnifiedForm } from "@/app/features";
 import { FormWidget } from "@/app/widgets";
 
+export const dynamic = "force-static";
+
 export default function AddPost() {
   return (
     <FormWidget type="post">

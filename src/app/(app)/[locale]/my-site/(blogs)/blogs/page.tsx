@@ -3,6 +3,7 @@ import { BlogCard } from "@/app/features";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 export const revalidate = 30;
+export const dynamic = "force-static";
 
 export default async function BlogsPage() {
   const queryClient = await prefetchBlogs();
