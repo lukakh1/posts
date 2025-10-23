@@ -1,5 +1,3 @@
-"use client";
-
 import { AuthForm } from "@/app/features";
 import { CustomLink } from "@/app/shared";
 

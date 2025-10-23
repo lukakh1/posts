@@ -1,5 +1,9 @@
-import { InfiniteQueryModule, prefetchInfinitePosts } from "@/app/modules";
+import { prefetchPosts } from "@/app/entities/api/posts";
+import { PostsWidget } from "@/app/widgets";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+
+export const revalidate = 30;
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "Infinite Posts Feed",
@@ -7,11 +11,16 @@ export const metadata = {
 };
 
 export default async function PostsPage() {
-  const queryClient = await prefetchInfinitePosts(10);
+  const queryClient = await prefetchPosts({ limit: 10 });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <InfiniteQueryModule />
+      <PostsWidget
+        displayType="infinite"
+        title="Infinite Posts Feed"
+        description="Scroll down to load more content automatically"
+        showHeader={true}
+      />
     </HydrationBoundary>
   );
 }

@@ -6,6 +6,8 @@ import { handleServerActionError } from "@/pkg/libraries/error-handler";
 import { desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
+import { getQueryClient } from "@/pkg/libraries/rest-api";
+import type { QueryClient } from "@tanstack/react-query";
 import { unstable_cache } from "next/cache";
 import { Blog, NewBlog } from "../../models";
 
@@ -56,4 +58,19 @@ export async function addBlog(blog: NewBlog): Promise<ApiResponse<Blog>> {
     });
     throw new Error(errorMessage);
   }
+}
+
+export async function prefetchBlogs() {
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery<ApiResponse<Blog[]>>({
+    queryKey: ["blogs"],
+    queryFn: () => getBlogs(),
+    staleTime: 30_000,
+  });
+  return queryClient;
+}
+
+export async function getPrefetchedBlogs(queryClient: QueryClient) {
+  const cached = queryClient.getQueryData<ApiResponse<Blog[]>>(["blogs"]);
+  return cached?.data ?? [];
 }
