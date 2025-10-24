@@ -60,7 +60,10 @@ export async function getPosts(
       page: page ?? null,
       pageParam: pageParam ?? null,
     });
-    throw new Error(errorMessage);
+    return {
+      success: false,
+      error: errorMessage,
+    };
   }
 }
 
@@ -78,7 +81,10 @@ export async function getPost(id: string): Promise<ApiResponse<Post>> {
       postId: id,
       url: `${envClient.NEXT_PUBLIC_API_URL}/posts/${id}`,
     });
-    throw new Error(errorMessage);
+    return {
+      success: false,
+      error: errorMessage,
+    };
   }
 }
 
@@ -99,6 +105,9 @@ export async function addPost(postData: NewPost): Promise<ApiResponse<Post>> {
       },
       url: `${envClient.NEXT_PUBLIC_API_URL}/posts`,
     });
-    throw new Error(errorMessage);
+    return {
+      success: false,
+      error: errorMessage,
+    };
   }
 }

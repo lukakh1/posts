@@ -1,7 +1,9 @@
 "use server";
 
+import { ApiResponse } from "@/app/shared/types";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { QueryClient } from "@tanstack/react-query";
+import { Post } from "../../models";
 import { postsQueryOptions } from "./posts.query.options";
 
 export async function prefetchAllPosts(queryClient: QueryClient) {
@@ -37,6 +39,7 @@ export async function getPostIdsForStaticParams(): Promise<number[]> {
     const result = await queryClient.fetchQuery(postsQueryOptions.all());
 
     if (!result.success || !result.data) {
+      console.warn("Failed to fetch posts for static params:", result.error);
       return [];
     }
     return result.data.map((post) => post.id);
@@ -52,8 +55,13 @@ export async function getPrefetchedPostFromCache(
 ) {
   const result = queryClient.getQueryData(
     postsQueryOptions.detail(id).queryKey
-  );
-  return result?.data;
+  ) as ApiResponse<Post> | undefined;
+
+  if (!result || !result.success) {
+    return null;
+  }
+
+  return result.data;
 }
 
 export async function prefetchSinglePost(id: string) {
