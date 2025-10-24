@@ -83,7 +83,7 @@ export function usePostsPag(limit: number = 10, page: number = 1) {
       }
       return result;
     },
-    staleTime: 1000 * 30,
+    staleTime: 30_000,
     placeholderData: (previousData) => previousData,
     meta: {
       onError: (error: Error) => {

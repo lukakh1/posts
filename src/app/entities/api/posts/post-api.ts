@@ -120,7 +120,7 @@ export async function prefetchPosts(options?: {
     await queryClient.prefetchQuery({
       queryKey: ["posts"],
       queryFn: () => getPosts(),
-      staleTime: 30 * 1000,
+      staleTime: 30_000,
     });
     return queryClient;
   }
@@ -179,7 +179,7 @@ export async function prefetchPosts(options?: {
                 throw error;
               }
             },
-            staleTime: 1000 * 30,
+            staleTime: 30_000,
           })
           .catch((error) => {
             console.error(`Failed to prefetch page ${pageToFetch}:`, error);

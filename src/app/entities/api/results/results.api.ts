@@ -12,5 +12,5 @@ export const getResults = unstable_cache(
     return { success: true, data: rows as Result[] };
   },
   ["results-list"],
-  { revalidate: 60, tags: ["results-list"] }
+  { revalidate: 30, tags: ["results-list"] }
 );

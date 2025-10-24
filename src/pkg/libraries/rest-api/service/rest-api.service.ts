@@ -8,13 +8,12 @@ import {
 let browserQueryClient: QueryClient | undefined = undefined;
 let serverQueryClient: QueryClient | undefined = undefined;
 
-// make query client
 const makeQueryClient = () => {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 5 * 60 * 1000, // 5 minutes
-        gcTime: 10 * 60 * 1000, // 10 minutes
+        staleTime: 30_000,
+        gcTime: 60_000,
         networkMode: "offlineFirst",
         refetchOnWindowFocus: false,
         placeholderData: keepPreviousData,
@@ -31,7 +30,6 @@ const makeQueryClient = () => {
   });
 };
 
-// query client
 export const getQueryClient = () => {
   if (isServer) {
     if (!serverQueryClient) {

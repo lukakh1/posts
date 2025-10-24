@@ -12,6 +12,6 @@ export const resultsQueryOptions = () =>
       }
       return response.data ?? [];
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes - align with server cache
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 30_000,
+    gcTime: 60_000,
   });
