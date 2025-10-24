@@ -3,7 +3,7 @@
 import { getOrders } from "@/app/entities/api/orders";
 import { Order } from "@/app/entities/models";
 import { ApiResponse } from "@/app/shared/types";
-import { handleServerActionError } from "@/pkg/libraries/error-handler";
+import { handleServerActionError } from "@/pkg/utils/error-handler";
 
 export interface DashboardData {
   orders: Order[];

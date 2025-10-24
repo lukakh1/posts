@@ -1,11 +1,11 @@
 "use server";
 import { ApiResponse } from "@/app/shared/types";
 import { envClient } from "@/config/env";
+import { getQueryClient } from "@/pkg/libraries/rest-api";
 import {
   handlePrefetchError,
   handleServerActionError,
-} from "@/pkg/libraries/error-handler";
-import { getQueryClient } from "@/pkg/libraries/rest-api";
+} from "@/pkg/utils/error-handler";
 import ky from "ky";
 import { revalidateTag } from "next/cache";
 import { NewPost, Post } from "../../models";

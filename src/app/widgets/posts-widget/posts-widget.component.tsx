@@ -7,7 +7,7 @@ import {
 } from "@/app/entities/api/posts";
 import { DataDisplayBlock, PostCard } from "@/app/features";
 import { useInfiniteScroll, usePagination } from "@/app/shared";
-import { handleQueryError } from "@/pkg/libraries/error-handler";
+import { handleQueryError } from "@/pkg/utils/error-handler";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 

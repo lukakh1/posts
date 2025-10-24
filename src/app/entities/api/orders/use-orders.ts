@@ -1,7 +1,7 @@
 "use client";
 
 import { ApiResponse } from "@/app/shared/types";
-import { handleQueryError } from "@/pkg/libraries/error-handler";
+import { handleQueryError } from "@/pkg/utils/error-handler";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Order } from "../../models";
 import { getOrders } from "./order-api";

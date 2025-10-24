@@ -2,7 +2,7 @@
 import { ApiResponse } from "@/app/shared/types";
 import { db } from "@/pkg/libraries/drizzle";
 import { blogs } from "@/pkg/libraries/drizzle/schema";
-import { handleServerActionError } from "@/pkg/libraries/error-handler";
+import { handleServerActionError } from "@/pkg/utils/error-handler";
 import { desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
