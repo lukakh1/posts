@@ -1,4 +1,3 @@
-export * from "./post-api";
-export * from "./posts-service";
-export * from "./use-create-post";
-export * from "./use-posts";
+export * from "./posts.api";
+export * from "./posts.prefetch";
+export * from "./posts.query";

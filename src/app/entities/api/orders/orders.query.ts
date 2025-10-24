@@ -3,38 +3,38 @@
 import { ApiResponse } from "@/app/shared/types";
 import { handleQueryError } from "@/pkg/utils/error-handler";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { Post } from "../../models";
-import { getPosts } from "./post-api";
+import { Order } from "../../models";
+import { getOrders } from "./orders.api";
 
-export const postsKeys = {
-  all: ["posts"] as const,
-  pag: ["postsPag"] as const,
-  inf: ["postsInf"] as const,
+export const ordersKeys = {
+  all: ["orders"] as const,
+  pag: ["ordersPag"] as const,
+  inf: ["ordersInf"] as const,
 };
 
-export function useInfinitePosts(limit: number = 10) {
-  return useInfiniteQuery<ApiResponse<Post[]>>({
-    queryKey: postsKeys.inf,
+export function useInfiniteOrders(limit: number = 10) {
+  return useInfiniteQuery<ApiResponse<Order[]>>({
+    queryKey: ordersKeys.inf,
     queryFn: async ({ pageParam }) => {
-      const result = await getPosts({
-        pageParam: pageParam as number,
+      const result = await getOrders({
+        page: (pageParam as number) + 1,
         limit: limit,
       });
       if (!result.success) {
-        throw new Error(result.error ?? "Failed to fetch infinite posts");
+        throw new Error(result.error ?? "Failed to fetch infinite orders");
       }
       return result;
     },
     getNextPageParam: (lastPage, allPages) => {
-      const nextSkip = allPages.length * limit;
-      return lastPage.total && nextSkip < lastPage.total
-        ? allPages.length
-        : undefined;
+      // If the last page has fewer items than the limit, we've reached the end
+      return lastPage.data && lastPage.data.length < limit
+        ? undefined
+        : allPages.length;
     },
     initialPageParam: 0,
     meta: {
       onError: (error: Error) => {
-        handleQueryError(error, "infinite posts", {
+        handleQueryError(error, "infinite orders", {
           limit,
           pageCount: "infinite",
         });
@@ -48,21 +48,21 @@ export function useInfinitePosts(limit: number = 10) {
   });
 }
 
-export function usePosts() {
-  return useQuery<ApiResponse<Post[]>>({
-    queryKey: postsKeys.all,
+export function useOrders() {
+  return useQuery<ApiResponse<Order[]>>({
+    queryKey: ordersKeys.all,
     queryFn: async () => {
-      const result = await getPosts();
+      const result = await getOrders();
       if (!result.success) {
-        throw new Error(result.error ?? "Failed to fetch posts");
+        throw new Error(result.error ?? "Failed to fetch orders");
       }
       return result;
     },
     staleTime: 30_000,
     meta: {
       onError: (error: Error) => {
-        handleQueryError(error, "all posts", {
-          queryType: "all-posts",
+        handleQueryError(error, "all orders", {
+          queryType: "all-orders",
         });
       },
     },
@@ -73,13 +73,13 @@ export function usePosts() {
   });
 }
 
-export function usePostsPag(limit: number = 10, page: number = 1) {
-  return useQuery<ApiResponse<Post[]>>({
-    queryKey: ["posts", "paginated", { limit, page }],
+export function useOrdersPag(limit: number = 10, page: number = 1) {
+  return useQuery<ApiResponse<Order[]>>({
+    queryKey: ["orders", "paginated", { limit, page }],
     queryFn: async () => {
-      const result = await getPosts({ limit, page });
+      const result = await getOrders({ limit, page });
       if (!result.success) {
-        throw new Error(result.error ?? "Failed to fetch posts");
+        throw new Error(result.error ?? "Failed to fetch orders");
       }
       return result;
     },
@@ -87,7 +87,7 @@ export function usePostsPag(limit: number = 10, page: number = 1) {
     placeholderData: (previousData) => previousData,
     meta: {
       onError: (error: Error) => {
-        handleQueryError(error, ["posts", "paginated"], {
+        handleQueryError(error, ["orders", "paginated"], {
           limit,
           page,
         });

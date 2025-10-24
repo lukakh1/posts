@@ -1,9 +1,8 @@
 import {
-  getPostsForStaticParams,
+  getPostIdsForStaticParams,
   getPrefetchedPostFromCache,
   prefetchSinglePost,
-} from "@/app/entities/api/posts/posts-service";
-import { Post } from "@/app/entities/models";
+} from "@/app/entities/api/posts";
 import { PostCard } from "@/app/features";
 import { SlugProps } from "@/app/shared";
 import PostModal from "@/app/shared/ui/modal/modal";
@@ -15,14 +14,14 @@ export const revalidate = 30;
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const posts = await getPostsForStaticParams();
-  return posts.map((post: Post) => ({ id: String(post.id) }));
+  const postIds = await getPostIdsForStaticParams();
+  return postIds.map((id: number) => ({ id }));
 }
 
 export default async function Page({ params }: SlugProps) {
   const { id } = await params;
   const queryClient = await prefetchSinglePost(id);
-  const post = getPrefetchedPostFromCache(queryClient, id);
+  const post = await getPrefetchedPostFromCache(queryClient, id);
   if (!post) notFound();
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -1,5 +1,6 @@
-import { prefetchPosts } from "@/app/entities/api/posts";
+import { prefetchAllPosts } from "@/app/entities/api/posts";
 import { PostsWidget } from "@/app/widgets";
+import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getTranslations } from "next-intl/server";
 
@@ -8,7 +9,8 @@ export const dynamic = "force-static";
 
 export default async function Home() {
   const t = await getTranslations("HomePage");
-  const queryClient = await prefetchPosts();
+  const queryClient = await getQueryClient();
+  await prefetchAllPosts(queryClient);
 
   return (
     <>
