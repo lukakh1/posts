@@ -1,4 +1,3 @@
-// Static data for the application
 export const abilitiesData = [
   {
     id: "expert-video-courses",
@@ -79,3 +78,97 @@ export const steps = [
     description: "Start improving with expert courses and brain training",
   },
 ];
+
+export const FAQ_ITEMS = [
+  {
+    id: "refund",
+    question: "What if I'm not satisfied with the program?",
+    answer:
+      "We're confident that you'll see the value and benefits of myIQ, but if you're not satisfied or you are experiencing technical issues, you might be eligible for refund. See our Refund Policy to learn more.",
+  },
+  {
+    id: "cancel",
+    question: "How do I cancel my subscription?",
+    answer:
+      "Canceling is simple and takes less than a few minutes. Visit our Help Center and follow the instructions. You'll maintain access until the end of your current billing period.",
+  },
+  {
+    id: "duration",
+    question: "How long does the IQ test take?",
+    answer: "The test typically takes 15–25 minutes to complete.",
+  },
+  {
+    id: "retake",
+    question: "Can I retake tests?",
+    answer:
+      "Yes, you can retake tests. We recommend waiting a few days between attempts.",
+  },
+  {
+    id: "devices",
+    question: "Can I access myIQ on multiple devices?",
+    answer:
+      "Absolutely. Your account works across desktop, tablet, and mobile devices.",
+  },
+  {
+    id: "security",
+    question: "Is my data secure?",
+    answer:
+      "We take your privacy seriously. Your data is stored securely and compliant with all applicable laws. Data is encrypted using bank-level security, and we never share your personal information with third parties. Your payment information is processed according to PCI-DSS industry standards. You can read more in our Privacy Policy.",
+  },
+];
+
+export const HERO_DATA = {
+  imageUrl: "/chart.png",
+  imageAlt: "IQ Test Chart",
+  title: "Want to Know Your",
+  titleHighlight: "Real IQ Score?",
+  description:
+    "Take our IQ test and unlock your path to self-discovery and development",
+  links: [
+    {
+      text: "Start IQ Test Now",
+      href: "/iq-test",
+      type: "primary" as const,
+    },
+    {
+      text: "How It Works",
+      href: "/iq-test",
+      type: "secondary" as const,
+    },
+  ],
+  showAvatars: true,
+  avatarData: {
+    images: [
+      "/avatars/a1.png",
+      "/avatars/a2.png",
+      "/avatars/a1.png",
+      "/avatars/a3.png",
+    ],
+    rating: 4.9,
+  },
+};
+
+export const COMMUNITY = {
+  title: "Community",
+  subtitle:
+    "Follow us on social media for daily quizzes, challenges and brain teasers to keep your mind sharp",
+  mobileSubtitle: "Follow us on social media",
+  socialLinks: [
+    {
+      href: "/twitter",
+      icon: "devicon:twitter",
+      iconClassName: "w-8 h-6",
+      ariaLabel: "Visit Twitter",
+    },
+    {
+      href: "/instagram",
+      icon: "mdi:instagram",
+      ariaLabel: "Visit Instagram",
+    },
+    {
+      href: "/facebook",
+      icon: "mdi:facebook",
+      ariaLabel: "Visit Facebook",
+    },
+  ],
+};

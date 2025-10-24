@@ -1,2 +1,2 @@
+export * from "./result.query";
 export * from "./results.api";
-export * from "./results.service";

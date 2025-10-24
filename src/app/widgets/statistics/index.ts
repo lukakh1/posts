@@ -1,1 +1,1 @@
-export { Statistics } from "./ui";
+export { Statistics } from "./statistics";

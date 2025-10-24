@@ -11,10 +11,8 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 
 export const dynamicParams = true;
-
+export const revalidate = 30;
 export const dynamic = "force-static";
-
-export const revalidate = 30000;
 
 export async function generateStaticParams() {
   const posts = await getPostsForStaticParams();

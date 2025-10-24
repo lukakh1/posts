@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { getStatisticsPaginated } from "./statistics.api";
+import { statisticsPaginatedQueryOptions } from "./statistics.query";
 
 const PAGE_SIZE = 8;
 
@@ -11,13 +11,9 @@ export function useRotatingStatistics(limit: number = PAGE_SIZE) {
   const totalCountRef = useRef<number | null>(null);
 
   const query = useQuery({
-    queryKey: ["statistics", "rotating", limit, currentOffset],
-    queryFn: async () => {
-      const res = await getStatisticsPaginated(limit, currentOffset);
-      if (!res.success)
-        throw new Error(res.error ?? "Failed to fetch statistics");
-
-      const items = res.data ?? [];
+    ...statisticsPaginatedQueryOptions(limit, currentOffset),
+    select: (data) => {
+      const items = data ?? [];
 
       if (items.length < limit && items.length > 0) {
         totalCountRef.current = currentOffset + items.length;
@@ -27,8 +23,7 @@ export function useRotatingStatistics(limit: number = PAGE_SIZE) {
 
       return items;
     },
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
+    refetchOnMount: false,
   });
 
   useEffect(() => {

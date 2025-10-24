@@ -1,7 +1,5 @@
 export * from "./auth-widget";
 export * from "./content-display";
-export * from "./data-display-block";
-export { FAQ } from "./FAQ";
 export { Footer } from "./footer";
 export * from "./form-widget";
 export { Header } from "./header";

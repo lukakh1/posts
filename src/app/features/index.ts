@@ -1,13 +1,15 @@
 export * from "../widgets/footer";
 export * from "../widgets/header";
 export * from "../widgets/iq-test-header";
+export * from "./accordion";
 export * from "./auth";
 export * from "./blog-card";
+export * from "./data-display-block";
 export * from "./form";
-export * from "./infinite-query";
+export * from "./hero-section";
+export * from "./image-hero";
 export { LikeButton } from "./like-button";
 export { LocaleSwitcher } from "./locale-switcher";
-export * from "./pagination";
 export * from "./post-card";
 export * from "./table";
 export * from "./test-page-cards";
