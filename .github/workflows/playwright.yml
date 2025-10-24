@@ -18,7 +18,8 @@ jobs:
       SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
 
       # Client environment variables (from env.client.ts)
-      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      # CRITICAL: Override API URL for CI to use local json-server
+      NEXT_PUBLIC_API_URL: http://localhost:3001
       NEXT_PUBLIC_MIXPANEL_TOKEN: ${{ secrets.NEXT_PUBLIC_MIXPANEL_TOKEN }}
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
@@ -45,22 +46,46 @@ jobs:
         run: npm run lint
         continue-on-error: true
 
+      # START JSON SERVER BEFORE BUILD!
+      - name: Start JSON Server
+        run: |
+          npx json-server db.json -p 3001 &
+          JSON_SERVER_PID=$!
+          echo "JSON_SERVER_PID=$JSON_SERVER_PID" >> $GITHUB_ENV
+          echo "Started JSON Server with PID: $JSON_SERVER_PID"
+
+      - name: Wait for JSON Server
+        run: |
+          echo "Waiting for JSON Server to be ready..."
+          npx wait-on http://localhost:3001 --timeout 30000
+          echo "JSON Server is ready!"
+
+      - name: Verify JSON Server
+        run: |
+          echo "Testing JSON Server connection..."
+          curl -f http://localhost:3001/posts || (echo "Failed to connect to JSON Server" && exit 1)
+          echo "JSON Server is accessible and responding"
+
+      # NOW BUILD WITH JSON SERVER RUNNING
       - name: Build Next.js app
         run: npm run build
         env:
           SKIP_LINT: true
+          NEXT_PUBLIC_API_URL: http://localhost:3001
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Start JSON Server
-        run: npx json-server db.json -p 3001 &
-
-      - name: Wait for JSON Server
-        run: npx wait-on http://localhost:3001
-
       - name: Run Playwright tests
         run: npx playwright test
+
+      - name: Stop JSON Server
+        if: always()
+        run: |
+          if [ ! -z "$JSON_SERVER_PID" ]; then
+            echo "Stopping JSON Server (PID: $JSON_SERVER_PID)"
+            kill $JSON_SERVER_PID || true
+          fi
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
