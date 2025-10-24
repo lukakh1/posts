@@ -1,3 +1,5 @@
+import { BACKGROUND_COLORS, GRID_COLUMN_CLASSES } from "@/app/shared";
+import { LoadingIndicator } from "@/app/shared/ui";
 import React from "react";
 
 export type ContentDisplayType = "default" | "horizontal-scroll" | "background";
@@ -23,6 +25,8 @@ export interface ContentDisplayProps<T> {
   data: T[];
   renderCard: (item: T, index: number) => React.ReactNode;
   className?: string;
+  loading?: boolean;
+  error?: Error | null;
 }
 
 export function ContentDisplay<T>({
@@ -30,6 +34,8 @@ export function ContentDisplay<T>({
   data,
   renderCard,
   className = "",
+  loading = false,
+  error = null,
 }: ContentDisplayProps<T>) {
   const {
     title,
@@ -43,47 +49,23 @@ export function ContentDisplay<T>({
     bottomText,
   } = config;
 
-  // Predefined grid classes to ensure Tailwind includes them
   const getGridClass = (cols: { default: number; md: number; lg?: number }) => {
     const baseClasses = "grid gap-6";
 
-    const defaultCols = {
-      1: "grid-cols-1",
-      2: "grid-cols-2",
-      3: "grid-cols-3",
-      4: "grid-cols-4",
-      5: "grid-cols-5",
-      6: "grid-cols-6",
-    };
+    const defaultClass =
+      GRID_COLUMN_CLASSES.default[
+        cols.default as keyof typeof GRID_COLUMN_CLASSES.default
+      ] || "grid-cols-1";
+    const mdClass =
+      GRID_COLUMN_CLASSES.md[cols.md as keyof typeof GRID_COLUMN_CLASSES.md] ||
+      "md:grid-cols-1";
+    const lgClass = cols.lg
+      ? GRID_COLUMN_CLASSES.lg[
+          cols.lg as keyof typeof GRID_COLUMN_CLASSES.lg
+        ] || ""
+      : "";
 
-    const mdCols = {
-      1: "md:grid-cols-1",
-      2: "md:grid-cols-2",
-      3: "md:grid-cols-3",
-      4: "md:grid-cols-4",
-      5: "md:grid-cols-5",
-      6: "md:grid-cols-6",
-    };
-
-    const lgCols = {
-      1: "lg:grid-cols-1",
-      2: "lg:grid-cols-2",
-      3: "lg:grid-cols-3",
-      4: "lg:grid-cols-4",
-      5: "lg:grid-cols-5",
-      6: "lg:grid-cols-6",
-    };
-
-    let classes = `${baseClasses} ${
-      defaultCols[cols.default as keyof typeof defaultCols] || "grid-cols-1"
-    }`;
-    classes += ` ${mdCols[cols.md as keyof typeof mdCols] || "md:grid-cols-1"}`;
-
-    if (cols.lg) {
-      classes += ` ${lgCols[cols.lg as keyof typeof lgCols] || ""}`;
-    }
-
-    return classes;
+    return `${baseClasses} ${defaultClass} ${mdClass} ${lgClass}`.trim();
   };
 
   const getContentLayout = () => {
@@ -97,51 +79,15 @@ export function ContentDisplay<T>({
 
   const getBackgroundClass = () => {
     if (type === "background") {
-      return "bg-[#e9f1f9]";
+      return BACKGROUND_COLORS.background;
     }
-    return background === "gray" ? "bg-[#e9f1f9]" : "";
+    return BACKGROUND_COLORS[background];
   };
 
   const renderContent = () => {
-    if (type === "background") {
-      return (
-        <div className="relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-screen bg-[#e9f1f9] h-full"></div>
-          <div className="relative z-10">
-            <div className={`container mx-auto px-4 ${containerClass}`}>
-              <div className={`text-center mb-8 md:mb-12 ${headerClass}`}>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  {title}
-                </h2>
-                {subtitle && (
-                  <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
-                    {subtitle}
-                  </p>
-                )}
-              </div>
+    const isBackgroundType = type === "background";
 
-              <div className={`${getContentLayout()} ${contentClass}`}>
-                {data.map((item, index) => {
-                  return (
-                    <div key={index} className="w-full">
-                      {renderCard(item, index)}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {bottomText && (
-                <div className="text-center mt-8">
-                  <p className="text-sm text-gray-600 italic">{bottomText}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    return (
+    const contentWrapper = (
       <div className={`container mx-auto px-4 ${containerClass}`}>
         <div className={`text-center mb-8 md:mb-12 ${headerClass}`}>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -155,13 +101,24 @@ export function ContentDisplay<T>({
         </div>
 
         <div className={`${getContentLayout()} ${contentClass}`}>
-          {data.map((item, index) => {
-            return (
+          {loading ? (
+            <div className="flex justify-center items-center py-12 col-span-full">
+              <LoadingIndicator />
+            </div>
+          ) : error ? (
+            <div className="flex justify-center items-center py-12 col-span-full">
+              <div className="text-red-500 text-center">
+                <p className="text-lg font-medium">Error loading content</p>
+                <p className="text-sm mt-1">{error.message}</p>
+              </div>
+            </div>
+          ) : (
+            data.map((item, index) => (
               <div key={index} className="w-full">
                 {renderCard(item, index)}
               </div>
-            );
-          })}
+            ))
+          )}
         </div>
 
         {bottomText && (
@@ -171,6 +128,17 @@ export function ContentDisplay<T>({
         )}
       </div>
     );
+
+    if (isBackgroundType) {
+      return (
+        <div className="relative">
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-screen bg-[#e9f1f9] h-full"></div>
+          <div className="relative z-10">{contentWrapper}</div>
+        </div>
+      );
+    }
+
+    return contentWrapper;
   };
 
   return (

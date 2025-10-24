@@ -6,13 +6,15 @@ import {
 } from "@tanstack/react-query";
 
 let browserQueryClient: QueryClient | undefined = undefined;
+let serverQueryClient: QueryClient | undefined = undefined;
 
 // make query client
 const makeQueryClient = () => {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        gcTime: 10 * 60 * 1000, // 10 minutes
         networkMode: "offlineFirst",
         refetchOnWindowFocus: false,
         placeholderData: keepPreviousData,
@@ -32,7 +34,10 @@ const makeQueryClient = () => {
 // query client
 export const getQueryClient = () => {
   if (isServer) {
-    return makeQueryClient();
+    if (!serverQueryClient) {
+      serverQueryClient = makeQueryClient();
+    }
+    return serverQueryClient;
   } else {
     if (!browserQueryClient) browserQueryClient = makeQueryClient();
     return browserQueryClient;

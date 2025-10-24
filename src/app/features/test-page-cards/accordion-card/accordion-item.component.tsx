@@ -1,10 +1,12 @@
-type FaqItemProps = {
+"use client";
+
+import React from "react";
+
+interface AccordionItemProps {
   id: string;
   question: string;
-  answer: React.ReactNode;
-  isOpen: boolean;
-  onToggle: () => void;
-};
+  answer: string | React.ReactNode;
+}
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -25,19 +27,22 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export const FaqItem: React.FC<FaqItemProps> = ({
+export const AccordionItem: React.FC<AccordionItemProps> = ({
   id,
   question,
   answer,
-  isOpen,
-  onToggle,
 }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="border-b border-gray-200" key={id}>
       <button
         type="button"
         aria-expanded={isOpen}
-        onClick={onToggle}
+        onClick={handleToggle}
         className="w-full flex items-center justify-between gap-4 py-[18px] text-left cursor-pointer"
       >
         <span className="text-medium font-medium text-[#2B2D42] md:text-lg">
