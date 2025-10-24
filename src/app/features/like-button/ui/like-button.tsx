@@ -1,5 +1,5 @@
 "use client";
-import { useLikeStore } from "@/app/shared/providers";
+import { useLikeStore } from "@/app/shared/store";
 import { Heart } from "./heart-svg";
 
 export default function LikeButton({ id, type }: { id: number; type: number }) {

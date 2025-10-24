@@ -1,4 +1,4 @@
-import { createLikeStore, initLikeStore } from "./like.store";
-import { LikeStore } from "./store-types";
+import { useLikeStore } from "./like.store";
+import { ILikeState, ILikeStore } from "./store-types";
 
-export { type LikeStore, createLikeStore, initLikeStore };
+export { useLikeStore, type ILikeState, type ILikeStore };

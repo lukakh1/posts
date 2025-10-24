@@ -12,10 +12,9 @@ export const getStatistics = unstable_cache(
     return { success: true, data: rows as Statistics[] };
   },
   ["statistics-list"],
-  { revalidate: 60, tags: ["statistics-list"] }
+  { revalidate: 30, tags: ["statistics-list"] }
 );
 
-// Paginated fetch without unstable_cache for timely updates
 export async function getStatisticsPaginated(
   limit: number,
   offset: number

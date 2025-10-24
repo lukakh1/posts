@@ -12,5 +12,5 @@ export const getIqTests = unstable_cache(
     return { success: true, data: rows as IqTest[] };
   },
   ["iq-tests-list"],
-  { revalidate: 60, tags: ["iq-tests-list"] }
+  { revalidate: 30, tags: ["iq-tests-list"] }
 );

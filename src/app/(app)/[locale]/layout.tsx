@@ -1,4 +1,3 @@
-import { LikeStoreProvider } from "@/app/shared/providers";
 import { envServer } from "@/config/env";
 import "@/config/styles/global.css";
 import { routing } from "@/pkg/libraries/locale";
@@ -53,10 +52,8 @@ const RootLayout: FC<Readonly<IProps>> = async (props) => {
           <UiProvider>
             <RestApiProvider>
               <HydrationBoundary state={dehydrate(clientQuery)}>
-                <LikeStoreProvider>
-                  {postmodal && postmodal}
-                  {children}
-                </LikeStoreProvider>
+                {postmodal && postmodal}
+                {children}
               </HydrationBoundary>
             </RestApiProvider>
           </UiProvider>

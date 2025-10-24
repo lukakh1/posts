@@ -1,7 +1,7 @@
 "use client";
 
 import { ApiResponse } from "@/app/shared/types";
-import { handleQueryError } from "@/pkg/libraries/error-handler";
+import { handleQueryError } from "@/pkg/utils/error-handler";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Order } from "../../models";
 import { getOrders } from "./order-api";
@@ -83,7 +83,7 @@ export function useOrdersPag(limit: number = 10, page: number = 1) {
       }
       return result;
     },
-    staleTime: 1000 * 30,
+    staleTime: 30_000,
     placeholderData: (previousData) => previousData,
     meta: {
       onError: (error: Error) => {

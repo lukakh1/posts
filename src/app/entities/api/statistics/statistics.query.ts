@@ -11,7 +11,7 @@ export const statisticsQueryOptions = () =>
       }
       return res.data ?? [];
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 30_000,
   });
 
 export const statisticsPaginatedQueryOptions = (
@@ -28,5 +28,5 @@ export const statisticsPaginatedQueryOptions = (
       return res.data ?? [];
     },
     refetchOnWindowFocus: false,
-    staleTime: Infinity,
+    staleTime: 30_000,
   });

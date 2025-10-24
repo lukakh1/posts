@@ -1,11 +1,11 @@
 "use server";
 import { ApiResponse } from "@/app/shared/types";
 import { envClient } from "@/config/env";
+import { getQueryClient } from "@/pkg/libraries/rest-api";
 import {
   handlePrefetchError,
   handleServerActionError,
-} from "@/pkg/libraries/error-handler";
-import { getQueryClient } from "@/pkg/libraries/rest-api";
+} from "@/pkg/utils/error-handler";
 import ky from "ky";
 import { revalidateTag } from "next/cache";
 import { NewPost, Post } from "../../models";
@@ -120,7 +120,7 @@ export async function prefetchPosts(options?: {
     await queryClient.prefetchQuery({
       queryKey: ["posts"],
       queryFn: () => getPosts(),
-      staleTime: 30 * 1000,
+      staleTime: 30_000,
     });
     return queryClient;
   }
@@ -179,7 +179,7 @@ export async function prefetchPosts(options?: {
                 throw error;
               }
             },
-            staleTime: 1000 * 30,
+            staleTime: 30_000,
           })
           .catch((error) => {
             console.error(`Failed to prefetch page ${pageToFetch}:`, error);
