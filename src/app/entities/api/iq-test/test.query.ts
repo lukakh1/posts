@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { IqTest } from "../../models";
-import { getIqTests } from "./iq-test.api";
+import { getIqTests } from "./test.api";
 
 export const iqTestsQueryOptions = () =>
   queryOptions({

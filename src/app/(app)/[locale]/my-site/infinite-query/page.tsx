@@ -1,5 +1,6 @@
-import { prefetchPosts } from "@/app/entities/api/posts";
+import { prefetchInfinitePosts } from "@/app/entities/api/posts";
 import { PostsWidget } from "@/app/widgets";
+import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 export const revalidate = 30;
@@ -11,7 +12,8 @@ export const metadata = {
 };
 
 export default async function PostsPage() {
-  const queryClient = await prefetchPosts({ limit: 10 });
+  const queryClient = await getQueryClient();
+  await prefetchInfinitePosts(queryClient, 10);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

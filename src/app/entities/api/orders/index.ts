@@ -1,2 +1,2 @@
-export * from "./order-api";
-export * from "./use-orders";
+export * from "./orders.api";
+export * from "./orders.query";

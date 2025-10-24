@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { NewBlog } from "../../models";
-import { addBlog } from "./blogs-api";
+import { addBlog } from "./blogs.api";
 
 export function useAddBlog() {
   return useMutation<void, Error, NewBlog>({

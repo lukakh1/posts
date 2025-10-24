@@ -1,2 +1,2 @@
-export * from "./blogs-api";
-export * from "./use-blogs";
+export * from "./blogs.api";
+export * from "./blogs.query";
