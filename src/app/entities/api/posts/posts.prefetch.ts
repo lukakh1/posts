@@ -1,6 +1,8 @@
 "use server";
 
+import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { QueryClient } from "@tanstack/react-query";
+import { getPosts } from "./posts.api";
 import { postsQueryOptions } from "./posts.query.options";
 
 export async function prefetchAllPosts(queryClient: QueryClient) {
@@ -32,7 +34,6 @@ export async function prefetchInfinitePosts(
 
 export async function getPostIdsForStaticParams(): Promise<number[]> {
   try {
-    const { getPosts } = await import("./posts.api");
     const result = await getPosts();
     if (!result.success || !result.data) {
       return [];
@@ -55,7 +56,6 @@ export async function getPrefetchedPostFromCache(
 }
 
 export async function prefetchSinglePost(id: string) {
-  const { getQueryClient } = await import("@/pkg/libraries/rest-api");
   const queryClient = await getQueryClient();
   await prefetchPostDetail(queryClient, id);
   return queryClient;
