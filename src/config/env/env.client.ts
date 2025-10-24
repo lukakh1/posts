@@ -7,7 +7,7 @@ export const envClient = createEnv({
     NEXT_PUBLIC_API_URL: z
       .string()
       .url({ message: "API_URL must be a valid URL" })
-      .default("http://localhost:3000/api"),
+      .default("http://localhost:3001"),
     NEXT_PUBLIC_MIXPANEL_TOKEN: z
       .string()
       .min(1, { message: "NEXT_PUBLIC_MIXPANEL_TOKEN is required" })
