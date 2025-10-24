@@ -2,7 +2,6 @@
 import { ApiResponse } from "@/app/shared/types";
 import { envClient } from "@/config/env";
 import { handleServerActionError } from "@/pkg/utils/error-handler";
-import ky from "ky";
 import { revalidateTag } from "next/cache";
 import { NewPost, Post } from "../../models";
 
@@ -22,6 +21,7 @@ interface GetPostsOptions {
   pageParam?: number;
 }
 
+// Use native fetch for better Next.js integration
 export async function getPosts(
   options: GetPostsOptions = {}
 ): Promise<ApiResponse<Post[]>> {
@@ -33,16 +33,21 @@ export async function getPosts(
   if (usePagination) {
     const currentPage = pageParam !== undefined ? pageParam + 1 : page || 1;
     const perPage = limit || 10;
-
     url += `?_page=${currentPage}&_per_page=${perPage}`;
   }
 
   try {
-    const result = await ky
-      .get(url, {
-        next: { revalidate: 30, tags: ["posts"] },
-      })
-      .json<PaginatedResponse | Post[]>();
+    const response = await fetch(url, {
+      next: { revalidate: 30, tags: ["posts"] },
+      // Add cache: 'force-cache' for build time
+      cache: process.env.NODE_ENV === "production" ? "force-cache" : "default",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const result = (await response.json()) as PaginatedResponse | Post[];
 
     return {
       success: true,
@@ -69,13 +74,22 @@ export async function getPosts(
 
 export async function getPost(id: string): Promise<ApiResponse<Post>> {
   try {
-    const data = await ky
-      .get(`${envClient.NEXT_PUBLIC_API_URL}/posts/${id}`, {
+    const response = await fetch(
+      `${envClient.NEXT_PUBLIC_API_URL}/posts/${id}`,
+      {
         next: { revalidate: 30, tags: ["posts"] },
-      })
-      .json<Post>();
+        cache:
+          process.env.NODE_ENV === "production" ? "force-cache" : "default",
+      }
+    );
 
-    return { success: true, data: data };
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = (await response.json()) as Post;
+
+    return { success: true, data };
   } catch (error: unknown) {
     const errorMessage = handleServerActionError(error, "getPost", {
       postId: id,
@@ -88,16 +102,26 @@ export async function getPost(id: string): Promise<ApiResponse<Post>> {
   }
 }
 
+// This IS a server action (mutation)
 export async function addPost(postData: NewPost): Promise<ApiResponse<Post>> {
   try {
-    const data = await ky
-      .post(`${envClient.NEXT_PUBLIC_API_URL}/posts`, {
-        json: postData,
-      })
-      .json<Post>();
+    const response = await fetch(`${envClient.NEXT_PUBLIC_API_URL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = (await response.json()) as Post;
 
     revalidateTag("posts");
-    return { success: true, data: data };
+    return { success: true, data };
   } catch (error: unknown) {
     const errorMessage = handleServerActionError(error, "addPost", {
       postData: {

@@ -1,5 +1,3 @@
-"use server";
-
 import { ApiResponse } from "@/app/shared/types";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { QueryClient } from "@tanstack/react-query";
@@ -33,7 +31,8 @@ export async function prefetchInfinitePosts(
   );
 }
 
-export async function getPostIdsForStaticParams(): Promise<number[]> {
+// For generateStaticParams - returns string IDs
+export async function getPostIdsForStaticParams(): Promise<string[]> {
   try {
     const queryClient = await getQueryClient();
     const result = await queryClient.fetchQuery(postsQueryOptions.all());
@@ -42,7 +41,9 @@ export async function getPostIdsForStaticParams(): Promise<number[]> {
       console.warn("Failed to fetch posts for static params:", result.error);
       return [];
     }
-    return result.data.map((post) => post.id);
+
+    // Convert to strings for Next.js params
+    return result.data.map((post) => String(post.id));
   } catch (error) {
     console.error("Error fetching post IDs for static params:", error);
     return [];

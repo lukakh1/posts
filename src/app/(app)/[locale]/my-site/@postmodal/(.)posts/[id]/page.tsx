@@ -15,7 +15,10 @@ export const dynamic = "force-static";
 
 export async function generateStaticParams() {
   const postIds = await getPostIdsForStaticParams();
-  return postIds.map((id: number) => ({ id }));
+
+  return postIds.map((id) => ({
+    id: id, // Already a string from getPostIdsForStaticParams
+  }));
 }
 
 export default async function Page({ params }: SlugProps) {
