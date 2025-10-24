@@ -37,10 +37,17 @@ export async function getPosts(
   }
 
   try {
+    console.log("[getPosts] Fetching from:", url);
+
     const response = await fetch(url, {
-      next: { revalidate: 30, tags: ["posts"] },
-      // Add cache: 'force-cache' for build time
-      cache: process.env.NODE_ENV === "production" ? "force-cache" : "default",
+      next: {
+        revalidate: 30,
+        tags: ["posts"],
+      },
+      // In CI/production during build, force cache to work offline after initial fetch
+      cache: process.env.CI === "true" ? "force-cache" : "default",
+      // Add timeout to fail fast if server isn't available
+      signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
     if (!response.ok) {
@@ -48,6 +55,13 @@ export async function getPosts(
     }
 
     const result = (await response.json()) as PaginatedResponse | Post[];
+
+    console.log(
+      "[getPosts] Success:",
+      usePagination
+        ? `${(result as PaginatedResponse).items} items`
+        : `${(result as Post[]).length} items`
+    );
 
     return {
       success: true,
@@ -59,11 +73,13 @@ export async function getPosts(
         : (result as Post[]).length,
     };
   } catch (error: unknown) {
+    console.error("[getPosts] Error:", error);
     const errorMessage = handleServerActionError(error, "getPosts", {
       url,
       limit: limit ?? null,
       page: page ?? null,
       pageParam: pageParam ?? null,
+      apiUrl: envClient.NEXT_PUBLIC_API_URL,
     });
     return {
       success: false,
@@ -74,12 +90,17 @@ export async function getPosts(
 
 export async function getPost(id: string): Promise<ApiResponse<Post>> {
   try {
+    console.log("[getPost] Fetching post:", id);
+
     const response = await fetch(
       `${envClient.NEXT_PUBLIC_API_URL}/posts/${id}`,
       {
-        next: { revalidate: 30, tags: ["posts"] },
-        cache:
-          process.env.NODE_ENV === "production" ? "force-cache" : "default",
+        next: {
+          revalidate: 30,
+          tags: ["posts"],
+        },
+        cache: process.env.CI === "true" ? "force-cache" : "default",
+        signal: AbortSignal.timeout(10000),
       }
     );
 
@@ -89,11 +110,15 @@ export async function getPost(id: string): Promise<ApiResponse<Post>> {
 
     const data = (await response.json()) as Post;
 
+    console.log("[getPost] Success:", data.id);
+
     return { success: true, data };
   } catch (error: unknown) {
+    console.error("[getPost] Error:", error);
     const errorMessage = handleServerActionError(error, "getPost", {
       postId: id,
       url: `${envClient.NEXT_PUBLIC_API_URL}/posts/${id}`,
+      apiUrl: envClient.NEXT_PUBLIC_API_URL,
     });
     return {
       success: false,
