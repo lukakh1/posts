@@ -18,7 +18,6 @@ export const getOrders = unstable_cache(
     const { limit, page, search } = options;
 
     try {
-      // Execute different queries based on conditions
       let rows;
 
       if (search && limit && page) {

@@ -17,7 +17,7 @@ export async function generateStaticParams() {
   const postIds = await getPostIdsForStaticParams();
 
   return postIds.map((id) => ({
-    id: id, // Already a string from getPostIdsForStaticParams
+    id: id,
   }));
 }
 

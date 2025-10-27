@@ -12,7 +12,6 @@ export async function prefetchIqTestData(queryClient: QueryClient) {
     await Promise.allSettled([
       queryClient.prefetchQuery(iqTestsQueryOptions()),
       queryClient.prefetchQuery(resultsQueryOptions()),
-      // Prefetch the first page of statistics that the rotating hook will use
       queryClient.prefetchQuery(statisticsPaginatedQueryOptions(PAGE_SIZE, 0)),
     ]);
   } catch (error) {

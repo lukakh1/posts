@@ -3,7 +3,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ILikeState, ILikeStore } from "./store-types";
 
-// service
 export const useLikeStore = create<ILikeStore>()(
   persist(
     (set, get) => ({

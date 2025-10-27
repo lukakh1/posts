@@ -1,4 +1,3 @@
-// interface
 export interface ILikeState {
   liked: number[];
 }

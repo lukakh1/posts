@@ -22,7 +22,6 @@ export const StarRating: React.FC<StarRatingProps> = ({
       const isHalfFilled = i === Math.ceil(rating) && rating % 1 !== 0;
 
       if (isFilled) {
-        // Fully filled star
         stars.push(
           <Icon
             key={i}
@@ -31,7 +30,6 @@ export const StarRating: React.FC<StarRatingProps> = ({
           />
         );
       } else if (isHalfFilled) {
-        // Half-filled star
         stars.push(
           <Icon
             key={i}
@@ -40,7 +38,6 @@ export const StarRating: React.FC<StarRatingProps> = ({
           />
         );
       } else {
-        // Empty star
         stars.push(
           <Icon
             key={i}
