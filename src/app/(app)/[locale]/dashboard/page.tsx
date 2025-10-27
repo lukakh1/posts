@@ -5,7 +5,6 @@ import { getQueryClient } from "@/pkg/libraries/rest-api";
 export default async function Page() {
   const queryClient = getQueryClient();
 
-  // Prefetch orders data on the server
   await queryClient.prefetchQuery({
     queryKey: ["orders"],
     queryFn: async () => {

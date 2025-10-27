@@ -1,5 +1,5 @@
 import { prefetchAllPosts } from "@/app/entities/api/posts";
-import { PostsWidget } from "@/app/widgets";
+import { SimplePostsWidget } from "@/app/widgets";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getTranslations } from "next-intl/server";
@@ -21,8 +21,7 @@ export default async function Home() {
         {t("description")}
       </p>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <PostsWidget
-          displayType="simple"
+        <SimplePostsWidget
           className="mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           testId="post-data"
         />

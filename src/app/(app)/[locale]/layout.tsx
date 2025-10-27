@@ -42,7 +42,6 @@ const RootLayout: FC<Readonly<IProps>> = async (props) => {
   const direction = getLangDir(locale);
 
   const clientQuery = getQueryClient();
-  // await clientQuery.prefetchQuery(layoutQueryOptions({ locale }));
   return (
     <html lang={locale} dir={direction} suppressHydrationWarning>
       {envServer.NODE_ENV !== "production" && <ScanComponent />}

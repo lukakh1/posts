@@ -1,16 +1,13 @@
 import { Header } from "@/app/features";
 import { type FC, type ReactNode } from "react";
 
-// interface
 interface IProps {
   children: ReactNode;
 }
 
-// component
 const LayoutModule: FC<Readonly<IProps>> = async (props) => {
   const { children } = props;
 
-  // return
   return (
     <>
       <Header />

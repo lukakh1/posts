@@ -1,5 +1,5 @@
 import { prefetchInfinitePosts } from "@/app/entities/api/posts";
-import { PostsWidget } from "@/app/widgets";
+import { InfinitePostsWidget } from "@/app/widgets";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
@@ -17,8 +17,7 @@ export default async function PostsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostsWidget
-        displayType="infinite"
+      <InfinitePostsWidget
         title="Infinite Posts Feed"
         description="Scroll down to load more content automatically"
         showHeader={true}

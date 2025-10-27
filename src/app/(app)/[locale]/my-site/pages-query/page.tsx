@@ -1,5 +1,5 @@
 import { prefetchPaginatedPosts } from "@/app/entities/api/posts";
-import { PostsWidget } from "@/app/widgets";
+import { PaginatedPostsWidget } from "@/app/widgets";
 import { getQueryClient } from "@/pkg/libraries/rest-api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
@@ -21,7 +21,7 @@ export default async function Home(props: PageProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostsWidget displayType="paginated" />
+      <PaginatedPostsWidget />
     </HydrationBoundary>
   );
 }

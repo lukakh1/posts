@@ -1,4 +1,3 @@
-// tailwind.config.js
 import { heroui } from "@heroui/react";
 
 /** @type {import('tailwindcss').Config} */
@@ -8,7 +7,6 @@ export default {
     "./node_modules/@heroui/theme/dist/components/(card|input|link|modal|number-input|table|ripple|form|button|spinner|checkbox|spacer).js",
   ],
   safelist: [
-    // Grid classes for ContentDisplay component
     "grid-cols-1",
     "grid-cols-2",
     "grid-cols-3",

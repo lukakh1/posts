@@ -26,7 +26,6 @@ export function useInfiniteOrders(limit: number = 10) {
       return result;
     },
     getNextPageParam: (lastPage, allPages) => {
-      // If the last page has fewer items than the limit, we've reached the end
       return lastPage.data && lastPage.data.length < limit
         ? undefined
         : allPages.length;
@@ -41,7 +40,6 @@ export function useInfiniteOrders(limit: number = 10) {
       },
     },
     retry: (failureCount, error) => {
-      // Don't retry on 4xx errors (client errors)
       if (error.message.includes("4")) return false;
       return failureCount < 2;
     },

@@ -6,7 +6,6 @@ interface IProps {
   postmodal: ReactNode;
 }
 
-// component
 const RootLayout: FC<Readonly<IProps>> = (props) => {
   const { children, postmodal } = props;
 

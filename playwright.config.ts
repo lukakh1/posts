@@ -35,7 +35,6 @@ export default defineConfig({
     stdout: "pipe",
     stderr: "pipe",
     env: {
-      // Server environment variables (from env.server.ts)
       CI: envServer.CI.toString(),
       NODE_ENV: envServer.NODE_ENV,
       DATABASE_URL: envServer.DATABASE_URL,
@@ -43,7 +42,6 @@ export default defineConfig({
       SENTRY_ORG: envServer.SENTRY_ORG,
       SENTRY_PROJECT: envServer.SENTRY_PROJECT,
 
-      // Client environment variables (already set above)
       NEXT_PUBLIC_API_URL:
         process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001",
       NEXT_PUBLIC_MIXPANEL_TOKEN:
