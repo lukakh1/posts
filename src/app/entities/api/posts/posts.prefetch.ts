@@ -31,7 +31,6 @@ export async function prefetchInfinitePosts(
   );
 }
 
-// For generateStaticParams - returns string IDs
 export async function getPostIdsForStaticParams(): Promise<string[]> {
   try {
     const queryClient = await getQueryClient();
@@ -42,7 +41,6 @@ export async function getPostIdsForStaticParams(): Promise<string[]> {
       return [];
     }
 
-    // Convert to strings for Next.js params
     return result.data.map((post) => String(post.id));
   } catch (error) {
     console.error("Error fetching post IDs for static params:", error);

@@ -1,6 +1,17 @@
-import { PaginationProps } from "../data-display-block.types";
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  onFirst: () => void;
+  onLast: () => void;
+  hasPrev: boolean;
+  hasNext: boolean;
+  disabled?: boolean;
+}
 
-export function Pagination({
+export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
@@ -74,24 +85,67 @@ export function Pagination({
   );
 }
 
-export function PaginationStats({
+interface PaginationWrapperProps {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage?: number;
+  onPageChange: (page: number) => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  onFirst: () => void;
+  onLast: () => void;
+  hasPrev: boolean;
+  hasNext: boolean;
+  disabled?: boolean;
+  children: React.ReactNode;
+}
+
+export function PaginationWrapper({
   currentPage,
   totalPages,
   totalItems,
-}: Pick<PaginationProps, "currentPage" | "totalPages" | "totalItems">) {
-  const startItem = (currentPage - 1) * 8 + 1;
-  const endItem = Math.min(currentPage * 8, totalItems);
+  itemsPerPage = 6,
+  onPageChange,
+  onPrevious,
+  onNext,
+  onFirst,
+  onLast,
+  hasPrev,
+  hasNext,
+  disabled = false,
+  children,
+}: PaginationWrapperProps) {
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-600">
-          Showing {startItem} to {endItem} of {totalItems} results
-        </div>
-        <div className="text-sm text-gray-500">
-          Page {currentPage} of {totalPages}
+    <>
+      <div className="mb-6">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-600">
+            Showing {startItem} to {endItem} of {totalItems} results
+          </div>
+          <div className="text-sm text-gray-500">
+            Page {currentPage} of {totalPages}
+          </div>
         </div>
       </div>
-    </div>
+
+      {children}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+        onPrevious={onPrevious}
+        onNext={onNext}
+        onFirst={onFirst}
+        onLast={onLast}
+        hasPrev={hasPrev}
+        hasNext={hasNext}
+        disabled={disabled}
+      />
+    </>
   );
 }

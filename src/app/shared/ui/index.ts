@@ -7,6 +7,7 @@ import { CustomLink } from "./link-button";
 import { LinkCard } from "./link-card";
 import { LoadingIndicator } from "./loading";
 import { Logo } from "./logo";
+import Pagination, { PaginationWrapper } from "./pagination/pagination";
 import { StarRating } from "./star-rating";
 
 export {
@@ -18,6 +19,8 @@ export {
   LinkCard,
   LoadingIndicator,
   Logo,
+  Pagination,
+  PaginationWrapper,
   StarRating,
   StatusAlert,
   SubmitButton,
